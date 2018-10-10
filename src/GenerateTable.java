@@ -8,53 +8,53 @@ import java.util.Date;
 import java.util.List;
 
 public class GenerateTable {
-	
+
 	public static int changeMonthFormatToInt(String month) {
-		
+
 		int monthNo = 0;
-		
-		if(month.equals("JAN")) {
+
+		if (month.equals("JAN")) {
 			monthNo = 0;
-		}	
-		if(month.equals("FEB")) {
+		}
+		if (month.equals("FEB")) {
 			monthNo = 1;
 		}
-		if(month.equals("MAR")) {
+		if (month.equals("MAR")) {
 			monthNo = 2;
 		}
-		if(month.equals("APR")) {
+		if (month.equals("APR")) {
 			monthNo = 3;
 		}
-		if(month.equals("MAY")) {
+		if (month.equals("MAY")) {
 			monthNo = 4;
 		}
-		if(month.equals("JUN")) {
+		if (month.equals("JUN")) {
 			monthNo = 5;
 		}
-		if(month.equals("JUl")) {
+		if (month.equals("JUl")) {
 			monthNo = 6;
 		}
-		if(month.equals("AUG")) {
+		if (month.equals("AUG")) {
 			monthNo = 7;
 		}
-		if(month.equals("SEP")) {
+		if (month.equals("SEP")) {
 			monthNo = 8;
 		}
-		if(month.equals("OCT")) {
+		if (month.equals("OCT")) {
 			monthNo = 9;
 		}
-		if(month.equals("NOV")) {
+		if (month.equals("NOV")) {
 			monthNo = 10;
 		}
-		if(month.equals("DEC")) {
+		if (month.equals("DEC")) {
 			monthNo = 11;
 		}
-		
+
 		return monthNo;
 	}
 
 	// TODO actual exception handing lol
-	public static ArrayList<PersonGedcom> getIndisFromFile(File file) throws Exception {
+	public static ArrayList<PersonGedcom> getPeopleFromFile(File file) throws Exception {
 
 		// ===================================================
 		// Code to change file to arraylist of string lines
@@ -109,16 +109,15 @@ public class GenerateTable {
 			String id = person.getID();
 
 			String name = "";
-			
+
 			int bday = 0, bmonth = 0, byear = 0, dday = 0, dmonth = 0, dyear = 40000;
-			
+
 			Date birthdate = null;
 			Date deathdate = null;
-			
+
 			String fams = "NA";
 			String famc = "NA";
-			
-			
+
 			String gender = "";
 			String spouseID = "";
 			ArrayList<String> childrenID = null;
@@ -127,82 +126,78 @@ public class GenerateTable {
 			boolean birthFlag = false;
 			boolean deathFlag = false;
 			boolean hasDied = false;
-			
+
 			// Search for our INDI tag and collect all data
 			for (String line : gedComStrings) {
-								
+
 				// Line Split
 				String[] splitTokens = line.split("\\s+");
-				
-				if(personRecordingState) {
-					if(splitTokens[0].trim().equals("0")) {
+
+				if (personRecordingState) {
+					if (splitTokens[0].trim().equals("0")) {
 						// The next person has begun
 						break;
 					} else {
-						if(splitTokens[1].trim().equals("SEX")) {
+						if (splitTokens[1].trim().equals("SEX")) {
 							gender = splitTokens[2].trim();
 						}
-						
+
 						// TODO add support for middle names
-						if(splitTokens[1].trim().equals("NAME")) {
+						if (splitTokens[1].trim().equals("NAME")) {
 							name = splitTokens[2].trim().concat(" " + splitTokens[3].trim());
 						}
-						
-						if(splitTokens[1].trim().equals("SEX")) {
+
+						if (splitTokens[1].trim().equals("SEX")) {
 							gender = splitTokens[2].trim();
 						}
-						
-						if(splitTokens[1].trim().equals("FAMS")) {
+
+						if (splitTokens[1].trim().equals("FAMS")) {
 							fams = splitTokens[2].trim().replace("@", "");
 						}
-						
-						if(splitTokens[1].trim().equals("FAMC")) {
+
+						if (splitTokens[1].trim().equals("FAMC")) {
 							famc = splitTokens[2].trim().replace("@", "");
 						}
-						
-						
+
 						// Special code because birth/death lines split
-						if(splitTokens[1].trim().equals("BIRT")) {
+						if (splitTokens[1].trim().equals("BIRT")) {
 							birthFlag = true;
 						}
-						
-						if(splitTokens[1].trim().equals("DEAT")) {
+
+						if (splitTokens[1].trim().equals("DEAT")) {
 							deathFlag = true;
 							hasDied = true;
 						}
-						
-						if(birthFlag && splitTokens[1].trim().equals("DATE")) {
+
+						if (birthFlag && splitTokens[1].trim().equals("DATE")) {
 							bday = Integer.parseInt(splitTokens[2]);
 							bmonth = changeMonthFormatToInt(splitTokens[3]);
 							byear = Integer.parseInt(splitTokens[4]);
 							birthFlag = false;
 						}
-						
-						if(deathFlag && splitTokens[1].trim().equals("DATE")) {
+
+						if (deathFlag && splitTokens[1].trim().equals("DATE")) {
 							dday = Integer.parseInt(splitTokens[2]);
 							dmonth = changeMonthFormatToInt(splitTokens[3]);
 							dyear = Integer.parseInt(splitTokens[4]);
 							deathFlag = false;
 						}
-						
-						
-						
+
 					}
 				}
-				
+
 				String tag = "";
 				if (splitTokens.length > 2) {
 					tag = splitTokens[2].trim();
 				}
-				
+
 				// TODO some defense if INDI is the id
-				if(tag.equals("INDI")) {
+				if (tag.equals("INDI")) {
 					String testID = splitTokens[1].trim().replace("@", "");
 					if (testID.equals(id)) {
 						personRecordingState = true;
 					}
 				}
-				
 
 			}
 
@@ -211,14 +206,150 @@ public class GenerateTable {
 			person.setSpouseID(spouseID);
 			person.setFamc(famc);
 			person.setFams(fams);
-			
+
 			// Special code for birthdays
-			person.setBirthDate(byear,bmonth,bday);
-			person.setDeathDate(dyear,dmonth,dday);
+			person.setBirthDate(byear, bmonth, bday);
+			person.setDeathDate(dyear, dmonth, dday);
 
 		}
-		
+
 		return people;
+
+	}
+
+	public static ArrayList<FamGedcom> getFamFromFile(File file) throws Exception {
+
+		// ===================================================
+		// Code to change file to arraylist of string lines
+		// ===================================================
+
+		// File reader and all
+		FileReader fileReader = new FileReader(file);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		ArrayList<String> gedComStrings = new ArrayList<String>();
+
+		String newLine;
+		while ((newLine = bufferedReader.readLine()) != null) {
+			gedComStrings.add(newLine);
+		}
+
+		/*
+		 * for(String string : gedComStrings) { System.out.println(string); }
+		 */
+
+		fileReader.close();
+		bufferedReader.close();
+
+		// ===================================================
+		// Code to begin extracting the families
+		// ===================================================
+
+		// Here is our FAMILY arraylist (IMPORTANT)
+		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
+
+		// Generate list of individuals with ID only
+		for (String line : gedComStrings) {
+			String inLine = line; // Let's avoid any side effects
+			String[] splitTokens = inLine.split("\\s+"); // Let's split our line by spaces (some regex)
+
+			String index = splitTokens[0].trim();
+			String id = splitTokens[1].trim(); // ONLY FOR INDI AND FAM
+			String altTag = "";
+			if (splitTokens.length > 2) {
+				altTag = splitTokens[2].trim(); // ONLY VALID FOR INDI AND FAM
+			}
+			// Begin production of our individuals
+			if (altTag.equals("FAM")) {
+				FamGedcom tempFam = new FamGedcom();
+				id = id.replace("@", ""); // Removes @ symbol found in some variants
+				tempFam.setFamID(id);
+				families.add(tempFam);
+			}
+		}
+
+		// Giving each person data
+		for (FamGedcom fam : families) {
+			String id = fam.getFamID();
+
+			String husbName = "";
+			String wifeName = "";
+			String husbID = "";
+			String wifeID = "";
+			int mday = 0, mmonth = 0, myear = 0;
+			int diday = 0, dimonth = 0, diyear = 0;
+			
+			boolean marrFlag = false;
+			boolean divFlag = false;
+
+			boolean famRecordingState = false;
+			// Search for our INDI tag and collect all data
+			for (String line : gedComStrings) {
+
+				// Line Split
+				String[] splitTokens = line.split("\\s+");
+
+				if (famRecordingState) {
+					if (splitTokens[0].trim().equals("0")) {
+						// The next person has begun
+						break;
+					} else {
+						if (splitTokens[1].trim().equals("HUSB")) {
+							husbID = splitTokens[2].trim().replace("@", "");
+						}
+						
+						if (splitTokens[1].trim().equals("WIFE")) {
+							wifeID = splitTokens[2].trim().replace("@", "");
+						}
+						
+						if (splitTokens[1].trim().equals("MARR")) {
+							marrFlag = true;
+						}
+
+						if (marrFlag && splitTokens[1].trim().equals("DATE")) {
+							mday = Integer.parseInt(splitTokens[2]);
+							mmonth = changeMonthFormatToInt(splitTokens[3]);
+							myear = Integer.parseInt(splitTokens[4]);
+							marrFlag = false;
+						}
+						
+						if (splitTokens[1].trim().equals("DIV")) {
+							divFlag = true;
+						}
+
+						if (divFlag && splitTokens[1].trim().equals("DATE")) {
+							diday = Integer.parseInt(splitTokens[2]);
+							dimonth = changeMonthFormatToInt(splitTokens[3]);
+							diyear = Integer.parseInt(splitTokens[4]);
+							divFlag = false;
+						}
+
+					}
+				}
+
+				String tag = "";
+				if (splitTokens.length > 2) {
+					tag = splitTokens[2].trim();
+				}
+
+				// TODO some defense if FAM is the id
+				if (tag.equals("FAM")) {
+					String testID = splitTokens[1].trim().replace("@", "");
+					if (testID.equals(id)) {
+						famRecordingState = true;
+					}
+				}
+
+			}
+			
+			fam.setHusbID(husbID);
+			fam.setWifeID(wifeID);
+			fam.setMarDate(myear, mmonth, mday);
+			fam.setDivDate(diyear, dimonth, diday);
+			
+
+		}
+
+		return families;
 
 	}
 
@@ -244,13 +375,23 @@ public class GenerateTable {
 		String outString = t.createString(people);
 		return outString;
 
-		// t.addColumn("Married", PersonGedcom::getMarried);
-		// t.addColumn("Divorced", PersonGedcom::getDivorced);
-		// t.addColumn("Husband ID", PersonGedcom::getHusbandID);
-		// t.addColumn("Husband Name", PersonGedcom::getHusbandName);
-		// t.addColumn("Wife ID", PersonGedcom::getSpouseID);
-		// t.addColumn("Wife Name", PersonGedcom::getWifeName);
-		// t.addColumn("Children", PersonGedcom::getChildrenID);
+	}
+	
+	public static String generateFamTable(ArrayList<FamGedcom> families) {
+
+		// Forming PersonGedcom objects from file
+		// ArrayList<PersonGedcom> people = new ArrayList<PersonGedcom>();
+
+		TableStringBuilder<FamGedcom> t = new TableStringBuilder<FamGedcom>();
+
+		t.addColumn("ID", FamGedcom::getFamID);
+		t.addColumn("Husband", FamGedcom::getHusbID);
+		t.addColumn("Wife", FamGedcom::getWifeID);
+		t.addColumn("Married", FamGedcom::getMarDate);
+		t.addColumn("Divorced", FamGedcom::getDivDate);
+		
+		String outString = t.createString(families);
+		return outString;
 
 	}
 
@@ -261,10 +402,10 @@ public class GenerateTable {
 	public static void main(String[] args) throws Exception {
 
 		File file = new File("/users/guhan/Desktop/proj01test.ged");
-		System.out.println(generateIndiTable(getIndisFromFile(file)));
-
-		
-
+		System.out.println("Individuals");
+		System.out.println(generateIndiTable(getPeopleFromFile(file)));
+		System.out.println("Families");
+		System.out.println(generateFamTable(getFamFromFile(file)));
 	}
 
 }
