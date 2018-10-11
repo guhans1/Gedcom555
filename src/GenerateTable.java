@@ -53,7 +53,7 @@ public class GenerateTable {
 		return monthNo;
 	}
 
-	// TODO actual exception handing lol
+	// TODO actual exception handing
 	public static ArrayList<PersonGedcom> getPeopleFromFile(File file) throws Exception {
 
 		// ===================================================
