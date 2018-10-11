@@ -89,8 +89,8 @@ public class GedcomTester {
 	// 3. Outputs edited output line with <--
 	public static void main(String[] args) {
 		try {
-			File file = new File("/users/guhan/Desktop/proj02test.ged");
-			// File file = new File("/users/guhan/Desktop/proj01test.ged");
+			// File file = new File("/users/guhan/Desktop/proj02test.ged");
+			File file = new File("/users/guhan/Desktop/proj01test.ged");
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			ArrayList<String> gedComStrings = new ArrayList<String>();

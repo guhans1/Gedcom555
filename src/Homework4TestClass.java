@@ -2,7 +2,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class TestClass {
+public class Homework4TestClass {
 
 	// Test 1 for 1 person with correct dates
 	@Test

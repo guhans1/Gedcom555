@@ -206,6 +206,7 @@ public class GenerateTable {
 			person.setSpouseID(spouseID);
 			person.setFamc(famc);
 			person.setFams(fams);
+			person.setHasDied(hasDied);
 
 			// Special code for birthdays
 			person.setBirthDate(byear, bmonth, bday);
@@ -277,9 +278,11 @@ public class GenerateTable {
 			String wifeID = "";
 			int mday = 0, mmonth = 0, myear = 0;
 			int diday = 0, dimonth = 0, diyear = 0;
-			
+			ArrayList<String> children = new ArrayList<String>();
+
 			boolean marrFlag = false;
 			boolean divFlag = false;
+			boolean isDivorced = false;
 
 			boolean famRecordingState = false;
 			// Search for our INDI tag and collect all data
@@ -296,11 +299,15 @@ public class GenerateTable {
 						if (splitTokens[1].trim().equals("HUSB")) {
 							husbID = splitTokens[2].trim().replace("@", "");
 						}
-						
+
 						if (splitTokens[1].trim().equals("WIFE")) {
 							wifeID = splitTokens[2].trim().replace("@", "");
 						}
 						
+						if (splitTokens[1].trim().equals("CHIL")) {
+							children.add(splitTokens[2].trim().replace("@", ""));
+						}
+
 						if (splitTokens[1].trim().equals("MARR")) {
 							marrFlag = true;
 						}
@@ -311,9 +318,10 @@ public class GenerateTable {
 							myear = Integer.parseInt(splitTokens[4]);
 							marrFlag = false;
 						}
-						
+
 						if (splitTokens[1].trim().equals("DIV")) {
 							divFlag = true;
+							isDivorced = true;
 						}
 
 						if (divFlag && splitTokens[1].trim().equals("DATE")) {
@@ -340,12 +348,13 @@ public class GenerateTable {
 				}
 
 			}
-			
+
 			fam.setHusbID(husbID);
 			fam.setWifeID(wifeID);
 			fam.setMarDate(myear, mmonth, mday);
 			fam.setDivDate(diyear, dimonth, diday);
-			
+			fam.setDivorced(isDivorced);
+			fam.setChildren(children);
 
 		}
 
@@ -353,18 +362,15 @@ public class GenerateTable {
 
 	}
 
-	public static String generateIndiTable(ArrayList<PersonGedcom> people) {
-
-		// Forming PersonGedcom objects from file
-		// ArrayList<PersonGedcom> people = new ArrayList<PersonGedcom>();
+	public static String generatePeopleTable(ArrayList<PersonGedcom> people) {
 
 		TableStringBuilder<PersonGedcom> t = new TableStringBuilder<PersonGedcom>();
 
 		t.addColumn("ID", PersonGedcom::getID);
 		t.addColumn("Name", PersonGedcom::getName);
 		t.addColumn("Gender", PersonGedcom::getGender);
-		t.addColumn("Birthday", PersonGedcom::getBirthDate);
-		t.addColumn("Age", PersonGedcom::getAgeIfAlive);
+		t.addColumn("Birthday", PersonGedcom::getBirthDateAsString);
+		t.addColumn("Age", PersonGedcom::getAge);
 		t.addColumn("Alive", PersonGedcom::checkIfAlive);
 		t.addColumn("Death", PersonGedcom::getDeathDateAsString);
 		t.addColumn("Spouse", PersonGedcom::getFams);
@@ -376,34 +382,28 @@ public class GenerateTable {
 		return outString;
 
 	}
-	
-	public static String generateFamTable(ArrayList<FamGedcom> families) {
 
-		// Forming PersonGedcom objects from file
-		// ArrayList<PersonGedcom> people = new ArrayList<PersonGedcom>();
+	public static String generateFamTable(ArrayList<FamGedcom> families) {
 
 		TableStringBuilder<FamGedcom> t = new TableStringBuilder<FamGedcom>();
 
 		t.addColumn("ID", FamGedcom::getFamID);
 		t.addColumn("Husband", FamGedcom::getHusbID);
 		t.addColumn("Wife", FamGedcom::getWifeID);
-		t.addColumn("Married", FamGedcom::getMarDate);
-		t.addColumn("Divorced", FamGedcom::getDivDate);
+		t.addColumn("Married", FamGedcom::getMarDateAsString);
+		t.addColumn("Divorced", FamGedcom::getDivDateAsString);
+		t.addColumn("Children", FamGedcom::getChildrenAsString);
 		
 		String outString = t.createString(families);
 		return outString;
 
 	}
 
-	public String generateFamTable(File file) {
-		return null;
-	}
-
 	public static void main(String[] args) throws Exception {
 
 		File file = new File("/users/guhan/Desktop/proj01test.ged");
 		System.out.println("Individuals");
-		System.out.println(generateIndiTable(getPeopleFromFile(file)));
+		System.out.println(generatePeopleTable(getPeopleFromFile(file)));
 		System.out.println("Families");
 		System.out.println(generateFamTable(getFamFromFile(file)));
 	}
