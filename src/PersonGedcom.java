@@ -26,6 +26,8 @@ public class PersonGedcom {
 	protected String fams = "NA";
 	protected String famc = "NA";
 	protected String familyID = "NA";
+	protected boolean valid = true;
+	protected String invalidType = "";
 
 	// Currently Unused
 	// However some of them have getters/setters
@@ -46,6 +48,26 @@ public class PersonGedcom {
 	public void setHasDied(boolean hasDied) {
 		this.hasDied = hasDied;
 	}
+	
+	// Deprecated, DONT USE
+	public boolean isAlive() {
+		if (this.deathdate != null) {
+			alive = false;
+			return alive;
+		} else {
+			alive = true;
+			return alive;
+		}
+	}
+	 
+	public boolean checkIfAlive() {
+		if (this.isHasDied()) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
 
 	public String getFams() {
 		return fams;
@@ -63,12 +85,12 @@ public class PersonGedcom {
 		this.famc = famc;
 	}
 
-	public void setID(String ID) {
-		this.ID = ID;
-	}
-
 	public String getID() {
 		return ID;
+	}
+	
+	public void setID(String ID) {
+		this.ID = ID;
 	}
 
 	public String getName() {
@@ -77,33 +99,6 @@ public class PersonGedcom {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Date getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthDate(Date birthdate) {
-		this.birthdate = birthdate;
-	}
-
-	public Date getDeathdate() {
-		return deathdate;
-	}
-
-	public void setDeathDate(Date deathdate) {
-		this.deathdate = deathdate;
-	}
-
-	// No set method, calculates directly from deathdate
-	public boolean isAlive() {
-		if (this.deathdate != null) {
-			alive = false;
-			return alive;
-		} else {
-			alive = true;
-			return alive;
-		}
 	}
 
 	public String getSpouseID() {
@@ -126,12 +121,6 @@ public class PersonGedcom {
 		childrenID.remove(childID);
 	}
 
-	public void setBirthDate(int iYear, int iMonth, int iDay) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(iYear, iMonth, iDay);
-		this.birthdate = cal.getTime();
-	}
-
 	public String getGender() {
 		return gender;
 	}
@@ -143,7 +132,7 @@ public class PersonGedcom {
 	public Date getBirthDate() {
 		return birthdate;
 	}
-
+	
 	// Outputs Mar 10 1930
 	public String getBirthDateAsString() {
 		String longBirthDate = birthdate.toString();
@@ -151,18 +140,25 @@ public class PersonGedcom {
 		String birthDate = tokens[1].trim() + " " + tokens[2].trim() + " " + tokens[5].trim();
 		return birthDate;
 	}
-
-	public void setDeathDate(int iYear, int iMonth, int iDay) {
-		Calendar cal2 = Calendar.getInstance();
-		cal2.set(iYear, iMonth, iDay);
-		this.deathdate = cal2.getTime();
+	
+	public void setBirthDate(Date birthdate) {
+		this.birthdate = birthdate;
 	}
 	
-	// WARNING: This will give you a date even if the person is alive
-	public Date getDeathDate() {
-		return deathdate;
+	public void setBirthDate(int iYear, int iMonth, int iDay) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(iYear, iMonth, iDay);
+		this.birthdate = cal.getTime();
 	}
-
+	
+	public Date getDeathDate() {
+		if (!this.checkIfAlive()) {
+			return deathdate;
+		} else {
+			return null;
+		}
+	}
+	
 	public String getDeathDateAsString() {
 		if (!this.checkIfAlive()) {
 			String longDeathDate = deathdate.toString();
@@ -174,21 +170,19 @@ public class PersonGedcom {
 		}
 
 	}
-
-	// Redundant but used in legacy code
-	public boolean checkIfAlive() {
-		if (this.isHasDied()) {
-			return false;
-		} else {
-			return true;
-		}
-
+	
+	public void setDeathDate(Date deathdate) {
+		this.deathdate = deathdate;
 	}
 
+	public void setDeathDate(int iYear, int iMonth, int iDay) {
+		Calendar cal2 = Calendar.getInstance();
+		cal2.set(iYear, iMonth, iDay);
+		this.deathdate = cal2.getTime();
+	}
+	
+	// TODO check if leap years function properly in getAge()
 	public int getAge() {
-
-		// TODO check if leap years function properly in getAge()
-		
 		if (this.isHasDied()) {
 			return getAgeIfDead();
 		} else {
@@ -263,6 +257,27 @@ public class PersonGedcom {
 	public void setFamilyID(String familyID) {
 		this.familyID = familyID;
 	}
+	
+	public boolean isValid() {
+		return valid;
+	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
+
+	public String getInvalidType() {
+		return invalidType;
+	}
+
+	public void setInvalidType(String invalidType) {
+		this.invalidType = invalidType;
+	}
+
+	@Override
+	public String toString() {
+		return ID;
+	}
 
 	// ===========================================
 	// For family purposes (UNUSED)
@@ -319,11 +334,5 @@ public class PersonGedcom {
 	public void setWifeName(String wifeName) {
 		this.wifeName = wifeName;
 	}
-
-	@Override
-	public String toString() {
-		return ID;
-
-	}
-
+	
 }
