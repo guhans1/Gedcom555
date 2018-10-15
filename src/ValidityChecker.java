@@ -136,9 +136,8 @@ public class ValidityChecker {
 		if (family.equals(null)) {
 			return true;
 		} else if(family.isDivorced()){
-			Date marriedDate = family.getMarDate();
 			Date divorcedDate = family.getDivDate();
-			if (marriedDate.before(deathdate)) {
+			if (divorcedDate.before(deathdate)) {
 				return true;
 			} else {
 				return false;
