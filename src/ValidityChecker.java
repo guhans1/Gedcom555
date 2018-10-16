@@ -146,8 +146,8 @@ public class ValidityChecker {
 			return true;
 		}
 	}
-	
-/*	public boolean MarriageAfter14(PersonGedcom person, ArrayList<FamGedcom> families) {
+	//marriage after 14
+	public boolean MarriageAfter14(PersonGedcom person, ArrayList<FamGedcom> families) {
 		Date birthdate = person.getBirthDate();
 		String famID = person.getFams();
 		FamGedcom family = null;
@@ -175,6 +175,6 @@ public class ValidityChecker {
 				return false;
 			}
 		}
-	*/	}
+		}
 
 }
