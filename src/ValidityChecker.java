@@ -147,6 +147,34 @@ public class ValidityChecker {
 		}
 	}
 	
-	
+/*	public boolean MarriageAfter14(PersonGedcom person, ArrayList<FamGedcom> families) {
+		Date birthdate = person.getBirthDate();
+		String famID = person.getFams();
+		FamGedcom family = null;
+		for (FamGedcom fams : families) 
+		{
+			if (fams.getFamID().equals(famID)) 
+			{
+				family = fams;
+				break;
+			}
+		}
+		if (family.equals(null))
+		{
+			return true;
+		}
+		else
+		{
+			Date marriedDate = family.getMarDate();
+			if(family.getNumberOfYearsMarried() - person.getAge() > 14)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	*/	}
 
 }
