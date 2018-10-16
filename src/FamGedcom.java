@@ -82,10 +82,9 @@ public class FamGedcom {
 		}
 
 	}
-/*
 
 
-
+// NEW FUNCTION
 
 	public int getNumberOfYearsMarried() {
 		
@@ -111,7 +110,7 @@ public class FamGedcom {
 
 	}
 	
-*/	
+	
 	
 	
 	
