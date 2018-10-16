@@ -12,6 +12,7 @@ public class FamGedcom {
 	protected ArrayList<String> children;
 	protected Date marDate;
 	protected Date divDate;
+	protected int maryears = 9999;
 
 	public String getFamID() {
 		return famID;
@@ -81,7 +82,44 @@ public class FamGedcom {
 		}
 
 	}
+/*
 
+
+
+
+	public int getNumberOfYearsMarried() {
+		
+		Calendar present = Calendar.getInstance();
+		Calendar dom = Calendar.getInstance();
+		dom.setTime(marDate);
+		int y1 = present.get(Calendar.YEAR);
+		int y2 = dom.get(Calendar.YEAR);
+		int maryears = y1 - y2;
+		int m1 = present.get(Calendar.MONTH);
+		int m2 = dom.get(Calendar.MONTH);
+		if (m2 > m1) {
+			maryears--;
+		} else if (m1 == m2) {
+			int d1 = present.get(Calendar.DAY_OF_MONTH);
+			int d2 = dom.get(Calendar.DAY_OF_MONTH);
+			if (d2 > d1) {
+				maryears--;
+			}
+		}
+
+		return maryears;
+
+	}
+	
+*/	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void setDivDate(Date divDate) {
 		this.divDate = divDate;
 	}
