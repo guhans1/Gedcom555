@@ -283,6 +283,7 @@ public class GenerateTable {
 			boolean marrFlag = false;
 			boolean divFlag = false;
 			boolean isDivorced = false;
+			boolean isMarried = false;
 
 			boolean famRecordingState = false;
 			// Search for our INDI tag and collect all data
@@ -310,6 +311,7 @@ public class GenerateTable {
 
 						if (splitTokens[1].trim().equals("MARR")) {
 							marrFlag = true;
+							isMarried = true;
 						}
 
 						if (marrFlag && splitTokens[1].trim().equals("DATE")) {
@@ -322,6 +324,7 @@ public class GenerateTable {
 						if (splitTokens[1].trim().equals("DIV")) {
 							divFlag = true;
 							isDivorced = true;
+							isMarried = false;
 						}
 
 						if (divFlag && splitTokens[1].trim().equals("DATE")) {
@@ -355,6 +358,7 @@ public class GenerateTable {
 			fam.setDivDate(diyear, dimonth, diday);
 			fam.setDivorced(isDivorced);
 			fam.setChildren(children);
+			fam.setMarried(isMarried);
 
 		}
 
@@ -410,6 +414,9 @@ public class GenerateTable {
 		for(PersonGedcom person : people) {
 			vc.checkValidity(person, families);
 		}
+		
+		PersonQuery pq = new PersonQuery();
+		people = pq.listDeceased(people);
 		
 		System.out.println("Individuals");
 		System.out.println(generatePeopleTable(people));
