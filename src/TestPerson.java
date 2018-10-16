@@ -372,4 +372,53 @@ public class TestPerson {
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
 	}
+	
+	//Differenece between birth date and marriage date is greater than 14 years GOOD!
+	@Test
+	void getNumberOfYearsMarriedTest15() {
+
+		PersonGedcom john = new PersonGedcom();
+		john.setID("I1");
+		john.setBirthDate(1930, 12, 12);
+		john.setDeathDate(1990, 10, 5);
+		john.setHasDied(true);
+
+		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
+		FamGedcom johnsfamily = new FamGedcom();
+		String famID = john.getFams();
+		johnsfamily.setFamID(famID);
+		johnsfamily.setMarDate(1955, 10, 10);
+		families.add(johnsfamily);
+
+		ValidityChecker vc = new ValidityChecker();
+		vc.checkValidity(john, families);
+
+		Boolean valid = john.isValid();
+		assertEquals(valid, true);
+	}
+
+	//Difference between birth date and marriage date is less than 14 years BAD!
+	@Test
+	void getNumberOfYearsMarriedTest16() {
+
+		PersonGedcom john = new PersonGedcom();
+		john.setID("I1");
+		john.setBirthDate(1930, 12, 12);
+		john.setDeathDate(1990, 10, 5);
+		john.setHasDied(true);
+
+		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
+		FamGedcom johnsfamily = new FamGedcom();
+		String famID = john.getFams();
+		johnsfamily.setFamID(famID);
+		johnsfamily.setMarDate(1940, 10, 10);
+		families.add(johnsfamily);
+
+		ValidityChecker vc = new ValidityChecker();
+		vc.checkValidity(john, families);
+
+		Boolean valid = john.isValid();
+		assertEquals(valid, false);
+	}
+
 }
