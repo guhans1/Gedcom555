@@ -26,6 +26,24 @@ public class PersonGedcom {
 	protected String fams = "NA";
 	protected String famc = "NA";
 	protected String familyID = "NA";
+	protected boolean valid = true;
+	protected String invalidType = "";
+
+	public boolean isValid() {
+		return valid;
+	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
+
+	public String getInvalidType() {
+		return invalidType;
+	}
+
+	public void setInvalidType(String invalidType) {
+		this.invalidType = invalidType;
+	}
 
 	// Currently Unused
 	// However some of them have getters/setters

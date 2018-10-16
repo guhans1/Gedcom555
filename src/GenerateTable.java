@@ -375,8 +375,8 @@ public class GenerateTable {
 		t.addColumn("Death", PersonGedcom::getDeathDateAsString);
 		t.addColumn("Spouse", PersonGedcom::getFams);
 		t.addColumn("Child", PersonGedcom::getFamc);
-		// t.addColumn("Children", PersonGedcom::getChildrenID);
-		// t.addColumn("Spouse", PersonGedcom::getSpouseID);
+		t.addColumn("Valid", PersonGedcom::isValid);
+		t.addColumn("Invalid Type", PersonGedcom::getInvalidType);
 
 		String outString = t.createString(people);
 		return outString;
@@ -402,10 +402,19 @@ public class GenerateTable {
 	public static void main(String[] args) throws Exception {
 
 		File file = new File("/users/guhan/Desktop/proj01test.ged");
+		
+		ArrayList<PersonGedcom> people = getPeopleFromFile(file);
+		ArrayList<FamGedcom> families = getFamFromFile(file);
+		
+		ValidityChecker vc = new ValidityChecker();
+		for(PersonGedcom person : people) {
+			vc.checkValidity(person, families);
+		}
+		
 		System.out.println("Individuals");
-		System.out.println(generatePeopleTable(getPeopleFromFile(file)));
+		System.out.println(generatePeopleTable(people));
 		System.out.println("Families");
-		System.out.println(generateFamTable(getFamFromFile(file)));
+		System.out.println(generateFamTable(families));
 	}
 
 }
