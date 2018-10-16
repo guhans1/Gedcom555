@@ -176,6 +176,12 @@ public class ValidityChecker {
 			}
 		}
 		}
-
+	public boolean ListDeceased(PersonGedcom person) {
+		if (person.isHasDied()
+		    {
+			return person.getID();
+		}
+		    else
+		    System.out.println("person is alive");
 	
 }
