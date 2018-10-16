@@ -375,7 +375,7 @@ public class TestPerson {
 	
 	//Differenece between birth date and marriage date is greater than 14 years GOOD!
 	@Test
-	void getNumberOfYearsMarriedTest15() {
+	void MarriageAfter14Test15() {
 
 		PersonGedcom john = new PersonGedcom();
 		john.setID("I1");
@@ -399,7 +399,7 @@ public class TestPerson {
 
 	//Difference between birth date and marriage date is less than 14 years BAD!
 	@Test
-	void getNumberOfYearsMarriedTest16() {
+	void MarriageAfter14Test16() {
 
 		PersonGedcom john = new PersonGedcom();
 		john.setID("I1");
