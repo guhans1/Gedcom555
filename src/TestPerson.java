@@ -19,6 +19,7 @@ public class TestPerson {
 	// Marriage before Divorce, Tests: 9,10
 	// Marriage before Death, Tests: 11,12
 	// Divorce before Death, Tests: 13,14
+	// Marriage after 13, Tests: 15, 16
 
 	// Guy is more than 150 years old BAD!
 	@Test
@@ -51,7 +52,7 @@ public class TestPerson {
 
 		PersonGedcom john = new PersonGedcom();
 		john.setID("I1");
-		john.setBirthDate(1950, 12, 12);
+		john.setBirthDate(1940, 12, 12);
 		john.setDeathDate(1990, 10, 5);
 		john.setHasDied(true);
 
@@ -83,7 +84,7 @@ public class TestPerson {
 		FamGedcom johnsfamily = new FamGedcom();
 		String famID = john.getFams();
 		johnsfamily.setFamID(famID);
-		johnsfamily.setMarDate(1960, 10, 10);
+		johnsfamily.setMarDate(1970, 10, 10);
 		families.add(johnsfamily);
 
 		ValidityChecker vc = new ValidityChecker();
@@ -364,6 +365,58 @@ public class TestPerson {
 		johnsfamily.setMarDate(1970, 10, 10);
 		johnsfamily.setDivorced(true);
 		johnsfamily.setDivDate(2000, 10, 10);
+		families.add(johnsfamily);
+
+		ValidityChecker vc = new ValidityChecker();
+		vc.checkValidity(john, families);
+
+		Boolean valid = john.isValid();
+		assertEquals(valid, false);
+	}
+
+	// Marriage after 14 GOOD!
+	@Test
+	void MarriageAfter14Test15() {
+
+		PersonGedcom john = new PersonGedcom();
+		john.setID("I1");
+		john.setBirthDate(1950, 12, 12);
+		john.setDeathDate(2000, 10, 5);
+		john.setHasDied(true);
+
+		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
+		FamGedcom johnsfamily = new FamGedcom();
+		String famID = john.getFams();
+		johnsfamily.setFamID(famID);
+		johnsfamily.setMarDate(1970, 10, 10);
+		johnsfamily.setDivorced(true);
+		johnsfamily.setDivDate(1990, 10, 10);
+		families.add(johnsfamily);
+
+		ValidityChecker vc = new ValidityChecker();
+		vc.checkValidity(john, families);
+
+		Boolean valid = john.isValid();
+		assertEquals(valid, true);
+	}
+
+	// Marriage after 14 BAD!
+	@Test
+	void MarriageAfter14Test16() {
+
+		PersonGedcom john = new PersonGedcom();
+		john.setID("I1");
+		john.setBirthDate(1950, 12, 12);
+		john.setDeathDate(2000, 10, 5);
+		john.setHasDied(true);
+
+		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
+		FamGedcom johnsfamily = new FamGedcom();
+		String famID = john.getFams();
+		johnsfamily.setFamID(famID);
+		johnsfamily.setMarDate(1960, 10, 10);
+		johnsfamily.setDivorced(true);
+		johnsfamily.setDivDate(1990, 10, 10);
 		families.add(johnsfamily);
 
 		ValidityChecker vc = new ValidityChecker();

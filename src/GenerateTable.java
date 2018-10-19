@@ -9,50 +9,6 @@ import java.util.List;
 
 public class GenerateTable {
 
-	public static int changeMonthFormatToInt(String month) {
-
-		int monthNo = 0;
-
-		if (month.equals("JAN")) {
-			monthNo = 0;
-		}
-		if (month.equals("FEB")) {
-			monthNo = 1;
-		}
-		if (month.equals("MAR")) {
-			monthNo = 2;
-		}
-		if (month.equals("APR")) {
-			monthNo = 3;
-		}
-		if (month.equals("MAY")) {
-			monthNo = 4;
-		}
-		if (month.equals("JUN")) {
-			monthNo = 5;
-		}
-		if (month.equals("JUl")) {
-			monthNo = 6;
-		}
-		if (month.equals("AUG")) {
-			monthNo = 7;
-		}
-		if (month.equals("SEP")) {
-			monthNo = 8;
-		}
-		if (month.equals("OCT")) {
-			monthNo = 9;
-		}
-		if (month.equals("NOV")) {
-			monthNo = 10;
-		}
-		if (month.equals("DEC")) {
-			monthNo = 11;
-		}
-
-		return monthNo;
-	}
-
 	// TODO actual exception handing
 	public static ArrayList<PersonGedcom> getPeopleFromFile(File file) throws Exception {
 
@@ -112,15 +68,11 @@ public class GenerateTable {
 
 			int bday = 0, bmonth = 0, byear = 0, dday = 0, dmonth = 0, dyear = 40000;
 
-			Date birthdate = null;
-			Date deathdate = null;
-
 			String fams = "NA";
 			String famc = "NA";
 
 			String gender = "";
 			String spouseID = "";
-			ArrayList<String> childrenID = null;
 
 			boolean personRecordingState = false;
 			boolean birthFlag = false;
@@ -171,14 +123,14 @@ public class GenerateTable {
 
 						if (birthFlag && splitTokens[1].trim().equals("DATE")) {
 							bday = Integer.parseInt(splitTokens[2]);
-							bmonth = changeMonthFormatToInt(splitTokens[3]);
+							bmonth = HelperFunctions.changeMonthFormatToInt(splitTokens[3]);
 							byear = Integer.parseInt(splitTokens[4]);
 							birthFlag = false;
 						}
 
 						if (deathFlag && splitTokens[1].trim().equals("DATE")) {
 							dday = Integer.parseInt(splitTokens[2]);
-							dmonth = changeMonthFormatToInt(splitTokens[3]);
+							dmonth = HelperFunctions.changeMonthFormatToInt(splitTokens[3]);
 							dyear = Integer.parseInt(splitTokens[4]);
 							deathFlag = false;
 						}
@@ -208,7 +160,7 @@ public class GenerateTable {
 			person.setFams(fams);
 			person.setHasDied(hasDied);
 
-			// Special code for birthdays
+			// Special code for birthdays/deathdays
 			person.setBirthDate(byear, bmonth, bday);
 			person.setDeathDate(dyear, dmonth, dday);
 
@@ -316,7 +268,7 @@ public class GenerateTable {
 
 						if (marrFlag && splitTokens[1].trim().equals("DATE")) {
 							mday = Integer.parseInt(splitTokens[2]);
-							mmonth = changeMonthFormatToInt(splitTokens[3]);
+							mmonth = HelperFunctions.changeMonthFormatToInt(splitTokens[3]);
 							myear = Integer.parseInt(splitTokens[4]);
 							marrFlag = false;
 						}
@@ -329,7 +281,7 @@ public class GenerateTable {
 
 						if (divFlag && splitTokens[1].trim().equals("DATE")) {
 							diday = Integer.parseInt(splitTokens[2]);
-							dimonth = changeMonthFormatToInt(splitTokens[3]);
+							dimonth = HelperFunctions.changeMonthFormatToInt(splitTokens[3]);
 							diyear = Integer.parseInt(splitTokens[4]);
 							divFlag = false;
 						}
@@ -375,7 +327,7 @@ public class GenerateTable {
 		t.addColumn("Gender", PersonGedcom::getGender);
 		t.addColumn("Birthday", PersonGedcom::getBirthDateAsString);
 		t.addColumn("Age", PersonGedcom::getAge);
-		t.addColumn("Alive", PersonGedcom::checkIfAlive);
+		t.addColumn("Alive", PersonGedcom::isAlive);
 		t.addColumn("Death", PersonGedcom::getDeathDateAsString);
 		t.addColumn("Spouse", PersonGedcom::getFams);
 		t.addColumn("Child", PersonGedcom::getFamc);
@@ -414,10 +366,7 @@ public class GenerateTable {
 		for(PersonGedcom person : people) {
 			vc.checkValidity(person, families);
 		}
-		
-		PersonQuery pq = new PersonQuery();
-		people = pq.listDeceased(people);
-		
+				
 		System.out.println("Individuals");
 		System.out.println(generatePeopleTable(people));
 		System.out.println("Families");

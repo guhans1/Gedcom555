@@ -1,8 +1,11 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ValidityChecker {
 
+	// Sprint 1
+	// 100% works
 	public boolean under150YearsOld(PersonGedcom person) {
 		if (person.getAge() > 150) {
 			return false;
@@ -12,6 +15,8 @@ public class ValidityChecker {
 		}
 	}
 
+	// Sprint 1
+	// 100% works
 	public boolean birthBeforeDeath(PersonGedcom person) {
 		if (person.isHasDied()) {
 			if (person.getBirthDate().before(person.getDeathDate())) {
@@ -24,6 +29,8 @@ public class ValidityChecker {
 		}
 	}
 
+	// Sprint 1
+	// V2 Fixed
 	public boolean birthBeforeMarriage(PersonGedcom person, ArrayList<FamGedcom> families) {
 		Date birthdate = person.getBirthDate();
 		String famID = person.getFams();
@@ -31,21 +38,17 @@ public class ValidityChecker {
 		for (FamGedcom fams : families) {
 			if (fams.getFamID().equals(famID)) {
 				family = fams;
-				break;
+				Date marriedDate = family.getMarDate();
+				if (!birthdate.before(marriedDate)) {
+					return false;
+				}
 			}
 		}
-		if (family == null) {
-			return true;
-		} else {
-			Date marriedDate = family.getMarDate();
-			if (birthdate.before(marriedDate)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
+		return true;
 	}
 
+	// Sprint 1
+	// V2 Fixed
 	public boolean birthBeforeDivorce(PersonGedcom person, ArrayList<FamGedcom> families) {
 		Date birthdate = person.getBirthDate();
 		String famID = person.getFams();
@@ -53,48 +56,40 @@ public class ValidityChecker {
 		for (FamGedcom fams : families) {
 			if (fams.getFamID().equals(famID)) {
 				family = fams;
-				break;
+				if (family.isDivorced()) {
+					Date divorcedDate = family.getDivDate();
+					if (!birthdate.before(divorcedDate)) {
+						return false;
+					}
+				}
+
 			}
 		}
-		if (family == null) {
-			return true;
-		} else if (!family.isDivorced()) {
-			return true;
-		} else {
-			Date divorcedDate = family.getDivDate();
-			if (birthdate.before(divorcedDate)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
+		return true;
 	}
 
+	// Sprint 1
+	// V2 Fixed
 	public boolean marriageBeforeDivorce(PersonGedcom person, ArrayList<FamGedcom> families) {
 		String famID = person.getFams();
 		FamGedcom family = null;
 		for (FamGedcom fams : families) {
 			if (fams.getFamID().equals(famID)) {
 				family = fams;
-				break;
+				if (family.isDivorced()) {
+					Date marDate = family.getMarDate();
+					Date divorcedDate = family.getDivDate();
+					if (!marDate.before(divorcedDate)) {
+						return false;
+					}
+				}
 			}
 		}
-		if (family == null) {
-			return true;
-		} else if (!family.isDivorced()) {
-			return true;
-		} else {
-			Date marriedDate = family.getMarDate();
-			Date divorcedDate = family.getDivDate();
-			if (marriedDate.before(divorcedDate)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
+		return true;
 	}
 
+	// Sprint 1
+	// V2 Fixed
 	public boolean marriageBeforeDeath(PersonGedcom person, ArrayList<FamGedcom> families) {
 		if (!person.isHasDied()) {
 			return true;
@@ -105,21 +100,17 @@ public class ValidityChecker {
 		for (FamGedcom fams : families) {
 			if (fams.getFamID().equals(famID)) {
 				family = fams;
-				break;
+				Date marriedDate = family.getMarDate();
+				if (!marriedDate.before(deathdate)) {
+					return false;
+				}
 			}
 		}
-		if (family == null) {
-			return true;
-		} else {
-			Date marriedDate = family.getMarDate();
-			if (marriedDate.before(deathdate)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
+		return true;
 	}
 
+	// Sprint 1
+	// V2 Fixed
 	public boolean divorceBeforeDeath(PersonGedcom person, ArrayList<FamGedcom> families) {
 		if (!person.isHasDied()) {
 			return true;
@@ -130,21 +121,34 @@ public class ValidityChecker {
 		for (FamGedcom fams : families) {
 			if (fams.getFamID().equals(famID)) {
 				family = fams;
-				break;
+				if (family.isDivorced()) {
+					Date divorcedDate = family.getDivDate();
+					if (!divorcedDate.before(deathdate)) {
+						return false;
+					}
+				}
 			}
 		}
-		if (family == null) {
-			return true;
-		} else if (family.isDivorced()) {
-			Date divorcedDate = family.getDivDate();
-			if (divorcedDate.before(deathdate)) {
-				return true;
-			} else {
-				return false;
+		return true;
+	}
+
+	public boolean marriageAfter14YearsOld(PersonGedcom person, ArrayList<FamGedcom> families) {
+		Date birthdate = person.getBirthdate();
+		String famID = person.getFams();
+		FamGedcom family = null;
+		for (FamGedcom fams : families) {
+			if (fams.getFamID().equals(famID)) {
+				family = fams;
+				Date marriedDate = family.getMarDate();
+	
+				int age = HelperFunctions.differenceInDatesInYears(birthdate, marriedDate);
+				
+				if (age < 14) {
+					return false;
+				}
 			}
-		} else {
-			return true;
 		}
+		return true;
 	}
 
 	public void checkValidity(PersonGedcom person, ArrayList<FamGedcom> families) {
@@ -182,6 +186,12 @@ public class ValidityChecker {
 			String invalidType = person.getInvalidType().concat("| Death before Divorce");
 			person.setInvalidType(invalidType);
 		}
+		if (!marriageAfter14YearsOld(person, families)) {
+			person.setValid(false);
+			String invalidType = person.getInvalidType().concat("| Marriage before 14");
+			person.setInvalidType(invalidType);
+		}
+		
 		String validType = person.getInvalidType();
 		if (!validType.isEmpty()) {
 			validType = validType.substring(1).trim();
@@ -190,17 +200,4 @@ public class ValidityChecker {
 	}
 
 }
-/*
- * // marriage after 14 public boolean MarriageAfter14(PersonGedcom person,
- * ArrayList<FamGedcom> families) { Date birthdate = person.getBirthDate();
- * String famID = person.getFams(); FamGedcom family = null; for (FamGedcom fams
- * : families) { if (fams.getFamID().equals(famID)) { family = fams; break; } }
- * if (family.equals(null)) { return true; } else { Date marriedDate =
- * family.getMarDate(); if (family.getNumberOfYearsMarried() - person.getAge() >
- * 14) { return true; } else { return false; } } }
- * 
- * public boolean ListDeceased(PersonGedcom person) { if (person.isHasDied() {
- * return person.getID(); }else System.out.println("person is alive");
- * 
- * }
- */
+
