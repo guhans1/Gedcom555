@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class HelperFunctions {
 
@@ -37,10 +38,14 @@ public class HelperFunctions {
 		return age;
 	}
 	
+	public static long differenceInDatesInDays(Date earlierDate, Date laterDate) {
+	    long diffInMilliseconds = laterDate.getTime() - earlierDate.getTime();
+	    return TimeUnit.DAYS.convert(diffInMilliseconds,TimeUnit.MILLISECONDS);
+	}
+	
+	
 	public static int changeMonthFormatToInt(String month) {
-
 		int monthNo = 0;
-
 		if (month.equals("JAN")) {
 			monthNo = 0;
 		}
@@ -77,7 +82,6 @@ public class HelperFunctions {
 		if (month.equals("DEC")) {
 			monthNo = 11;
 		}
-
 		return monthNo;
 	}
 }

@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class PersonQuery {
 
-	public ArrayList<PersonGedcom> listDeceased(ArrayList<PersonGedcom> people) {
+	public static ArrayList<PersonGedcom> listDeceased(ArrayList<PersonGedcom> people) {
 		ArrayList<PersonGedcom> deadPeople = new ArrayList<PersonGedcom>();
 		for (PersonGedcom person : people) {
 			if (person.isHasDied()) {
@@ -12,7 +14,34 @@ public class PersonQuery {
 		return deadPeople;
 	}
 
-	public void listAliveAndSingle(ArrayList<PersonGedcom> people, ArrayList<FamGedcom> families) {
+	public static ArrayList<PersonGedcom> listRecentBirths(ArrayList<PersonGedcom> people) {
+		ArrayList<PersonGedcom> recentlyBornPeople = new ArrayList<PersonGedcom>();
+		for (PersonGedcom person : people) {
+			if (person.isHasDied()) {
+				Date birthdate = person.getBirthDate();
+				if (HelperFunctions.differenceInDatesInDays(birthdate, Calendar.getInstance().getTime()) < 30) {
+					recentlyBornPeople.add(person);
+				}
+			}
+		}
+		return recentlyBornPeople;
+	}
+
+	public static ArrayList<PersonGedcom> listRecentDeaths(ArrayList<PersonGedcom> people) {
+		ArrayList<PersonGedcom> recentlyDeadPeople = new ArrayList<PersonGedcom>();
+		for (PersonGedcom person : people) {
+			if (person.isHasDied()) {
+				Date deathdate = person.getDeathDate();
+				if (HelperFunctions.differenceInDatesInDays(deathdate, Calendar.getInstance().getTime()) < 30) {
+					recentlyDeadPeople.add(person);
+				}
+			}
+		}
+		return recentlyDeadPeople;
+	}
+
+	// Fixed
+	public ArrayList<PersonGedcom> listAliveAndSingle(ArrayList<PersonGedcom> people, ArrayList<FamGedcom> families) {
 		ArrayList<PersonGedcom> alivePeople = new ArrayList<PersonGedcom>();
 		ArrayList<PersonGedcom> aliveAndSinglePeople = new ArrayList<PersonGedcom>();
 		for (PersonGedcom person : people) {
@@ -20,28 +49,23 @@ public class PersonQuery {
 				alivePeople.add(person);
 			}
 		}
-		for (PersonGedcom person : people) {
+		for (PersonGedcom person : alivePeople) {
+			boolean isSingle = true;
 			String famID = person.getFams();
 			FamGedcom family = null;
-			boolean hasFamily = false;
 			for (FamGedcom fams : families) {
 				if (fams.getFamID().equals(famID)) {
 					family = fams;
-					hasFamily = true;
-					break;
+					if (!family.isDivorced()) {
+						isSingle = false;
+					}
 				}
 			}
-			if(hasFamily) {
-				if(family.isMarried()) {
-					// do nothing
-				} else {
-					aliveAndSinglePeople.add(person);
-				}
-			} else {
+			if(isSingle) {
 				aliveAndSinglePeople.add(person);
 			}
 		}
-
+		return aliveAndSinglePeople;
 	}
 
 }

@@ -364,8 +364,10 @@ public class GenerateTable {
 		
 		ValidityChecker vc = new ValidityChecker();
 		for(PersonGedcom person : people) {
-			vc.checkValidity(person, families);
+			vc.checkValidity(person, families, people);
 		}
+		
+		// people = PersonQuery.listRecentDeaths(people);
 				
 		System.out.println("Individuals");
 		System.out.println(generatePeopleTable(people));

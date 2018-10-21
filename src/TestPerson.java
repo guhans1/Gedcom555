@@ -402,27 +402,103 @@ public class TestPerson {
 
 	// Marriage after 14 BAD!
 	@Test
-	void MarriageAfter14Test16() {
+	void CorrectGenderForRoleTest17() {
 
 		PersonGedcom john = new PersonGedcom();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(2000, 10, 5);
 		john.setHasDied(true);
-
+		john.setGender("M");
+		john.setFams("F1");
+		
+		PersonGedcom jane = new PersonGedcom();
+		jane.setID("I2");
+		jane.setBirthDate(1950, 12, 12);
+		jane.setDeathDate(2000, 10, 5);
+		jane.setHasDied(true);
+		jane.setGender("F");
+		jane.setFams("F1");
+		
+		ArrayList<PersonGedcom> people = new ArrayList<PersonGedcom>();
+		people.add(john);
+		people.add(jane);
+		
 		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
 		FamGedcom johnsfamily = new FamGedcom();
 		String famID = john.getFams();
 		johnsfamily.setFamID(famID);
 		johnsfamily.setMarDate(1960, 10, 10);
-		johnsfamily.setDivorced(true);
-		johnsfamily.setDivDate(1990, 10, 10);
+		johnsfamily.setMarried(true);
+		johnsfamily.setHusbID("I1");
+		johnsfamily.setWifeID("I2");
 		families.add(johnsfamily);
 
 		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		vc.checkValidity(john, families, people);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
 	}
+	
+	// BAD!
+	void CorrectGenderForRoleTest18() {
+
+		PersonGedcom john = new PersonGedcom();
+		john.setID("I1");
+		john.setBirthDate(1950, 12, 12);
+		john.setDeathDate(2000, 10, 5);
+		john.setHasDied(true);
+		john.setGender("M");
+		john.setFams("F1");
+		
+		PersonGedcom jane = new PersonGedcom();
+		jane.setID("I2");
+		jane.setBirthDate(1950, 12, 12);
+		jane.setDeathDate(2000, 10, 5);
+		jane.setHasDied(true);
+		jane.setGender("F");
+		jane.setFams("F1");
+		
+		ArrayList<PersonGedcom> people = new ArrayList<PersonGedcom>();
+		people.add(john);
+		people.add(jane);
+		
+		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
+		FamGedcom johnsfamily = new FamGedcom();
+		String famID = john.getFams();
+		johnsfamily.setFamID(famID);
+		johnsfamily.setMarDate(1960, 10, 10);
+		johnsfamily.setMarried(true);
+		johnsfamily.setHusbID("I1");
+		johnsfamily.setWifeID("I2");
+		families.add(johnsfamily);
+
+		ValidityChecker vc = new ValidityChecker();
+		vc.checkValidity(john, families, people);
+
+		Boolean valid = john.isValid();
+		assertEquals(valid, false);
+	}
+	
+	void testListDeceased() {
+		
+	}
+	
+	void testListRecentlyDeceased() {
+		
+	}
+	
+	void testListRecentlyBorn() {
+		
+	}
+	
+	void testListAliveAndSingle() {
+		
+	}
+	
+	
+	
+	
+	
 }

@@ -132,6 +132,7 @@ public class ValidityChecker {
 		return true;
 	}
 
+	// Sprint 2
 	public boolean marriageAfter14YearsOld(PersonGedcom person, ArrayList<FamGedcom> families) {
 		Date birthdate = person.getBirthdate();
 		String famID = person.getFams();
@@ -150,7 +151,47 @@ public class ValidityChecker {
 		}
 		return true;
 	}
-
+	
+	// Sprint 2
+	public boolean correctGenderForRole(PersonGedcom person, ArrayList<FamGedcom> families, ArrayList<PersonGedcom> people) {
+		String gender = person.getGender();
+		if(gender.equals("M")) {
+			String famID = person.getFams();
+			FamGedcom family = null;
+			for (FamGedcom fams : families) {
+				if (fams.getFamID().equals(famID)) {
+					family = fams;
+					String wifeID = family.getWifeID();
+					for(PersonGedcom wife : people) {
+						if(wife.getID().equals(wifeID)) {
+							if(wife.getGender().equals(("M"))) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+		} else {
+			String famID = person.getFams();
+			FamGedcom family = null;
+			for (FamGedcom fams : families) {
+				if (fams.getFamID().equals(famID)) {
+					family = fams;
+					String husbID = family.getHusbID();
+					for(PersonGedcom husb : people) {
+						if(husb.getID().equals(husbID)) {
+							if(husb.getGender().equals(("F"))) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
+	// Use overloaded method, (probably) don't use this one!
 	public void checkValidity(PersonGedcom person, ArrayList<FamGedcom> families) {
 		if (!under150YearsOld(person)) {
 			person.setValid(false);
@@ -189,6 +230,60 @@ public class ValidityChecker {
 		if (!marriageAfter14YearsOld(person, families)) {
 			person.setValid(false);
 			String invalidType = person.getInvalidType().concat("| Marriage before 14");
+			person.setInvalidType(invalidType);
+		}
+		
+		String validType = person.getInvalidType();
+		if (!validType.isEmpty()) {
+			validType = validType.substring(1).trim();
+		}
+		person.setInvalidType(validType);
+	}
+
+	// Overloaded Method : Use this if unsure which method to use
+	public void checkValidity(PersonGedcom person, ArrayList<FamGedcom> families, ArrayList<PersonGedcom> people) {
+		if (!under150YearsOld(person)) {
+			person.setValid(false);
+			person.setInvalidType("| Over 150 years old");
+		}
+		if (!birthBeforeDeath(person)) {
+			person.setValid(false);
+			String invalidType = person.getInvalidType().concat("| Death before Birth");
+			person.setInvalidType(invalidType);
+		}
+		if (!birthBeforeMarriage(person, families)) {
+			person.setValid(false);
+			String invalidType = person.getInvalidType().concat("| Marriage before Birth");
+			person.setInvalidType(invalidType);
+		}
+		if (!birthBeforeDivorce(person, families)) {
+			person.setValid(false);
+			String invalidType = person.getInvalidType().concat("| Divorce before Birth");
+			person.setInvalidType(invalidType);
+		}
+		if (!marriageBeforeDivorce(person, families)) {
+			person.setValid(false);
+			String invalidType = person.getInvalidType().concat("| Divorce before Marriage");
+			person.setInvalidType(invalidType);
+		}
+		if (!marriageBeforeDeath(person, families)) {
+			person.setValid(false);
+			String invalidType = person.getInvalidType().concat("| Death before Marriage");
+			person.setInvalidType(invalidType);
+		}
+		if (!divorceBeforeDeath(person, families)) {
+			person.setValid(false);
+			String invalidType = person.getInvalidType().concat("| Death before Divorce");
+			person.setInvalidType(invalidType);
+		}
+		if (!marriageAfter14YearsOld(person, families)) {
+			person.setValid(false);
+			String invalidType = person.getInvalidType().concat("| Marriage before 14");
+			person.setInvalidType(invalidType);
+		}
+		if (!correctGenderForRole(person, families, people)) {
+			person.setValid(false);
+			String invalidType = person.getInvalidType().concat("| Incorrect Gender Role");
 			person.setInvalidType(invalidType);
 		}
 		
