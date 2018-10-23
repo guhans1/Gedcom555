@@ -153,6 +153,7 @@ public class ValidityChecker {
 	}
 	
 	// Sprint 2
+	// Dushyanth please debug this; make sure it works
 	public boolean correctGenderForRole(PersonGedcom person, ArrayList<FamGedcom> families, ArrayList<PersonGedcom> people) {
 		String gender = person.getGender();
 		if(gender.equals("M")) {
@@ -245,46 +246,55 @@ public class ValidityChecker {
 		if (!under150YearsOld(person)) {
 			person.setValid(false);
 			person.setInvalidType("| Over 150 years old");
+			System.out.println("US01: " + person.toString() + " is over 150 years old" );
 		}
 		if (!birthBeforeDeath(person)) {
 			person.setValid(false);
 			String invalidType = person.getInvalidType().concat("| Death before Birth");
 			person.setInvalidType(invalidType);
+			System.out.println("US03: " + person.toString() + " died before birth" );
 		}
 		if (!birthBeforeMarriage(person, families)) {
 			person.setValid(false);
 			String invalidType = person.getInvalidType().concat("| Marriage before Birth");
 			person.setInvalidType(invalidType);
+			System.out.println("US02: " + person.toString() + " married before being born" );
 		}
 		if (!birthBeforeDivorce(person, families)) {
 			person.setValid(false);
 			String invalidType = person.getInvalidType().concat("| Divorce before Birth");
 			person.setInvalidType(invalidType);
+			System.out.println("US02: " + person.toString() + " died before getting divorced" );
 		}
 		if (!marriageBeforeDivorce(person, families)) {
 			person.setValid(false);
 			String invalidType = person.getInvalidType().concat("| Divorce before Marriage");
 			person.setInvalidType(invalidType);
+			System.out.println("US04: " + person.toString() + " divorced before getting married" );
 		}
 		if (!marriageBeforeDeath(person, families)) {
 			person.setValid(false);
 			String invalidType = person.getInvalidType().concat("| Death before Marriage");
 			person.setInvalidType(invalidType);
+			System.out.println("US05: " + person.toString() + " died before getting married" );
 		}
 		if (!divorceBeforeDeath(person, families)) {
 			person.setValid(false);
 			String invalidType = person.getInvalidType().concat("| Death before Divorce");
 			person.setInvalidType(invalidType);
+			System.out.println("US05: " + person.toString() + " died before getting divorced" );
 		}
 		if (!marriageAfter14YearsOld(person, families)) {
 			person.setValid(false);
 			String invalidType = person.getInvalidType().concat("| Marriage before 14");
 			person.setInvalidType(invalidType);
+			System.out.println("US10: " + person.toString() + " married before age 14" );
 		}
 		if (!correctGenderForRole(person, families, people)) {
 			person.setValid(false);
 			String invalidType = person.getInvalidType().concat("| Incorrect Gender Role");
 			person.setInvalidType(invalidType);
+			System.out.println("US21: " + person.toString() + " has incorrect gender role" );
 		}
 		
 		String validType = person.getInvalidType();

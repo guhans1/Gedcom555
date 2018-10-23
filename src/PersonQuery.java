@@ -41,7 +41,7 @@ public class PersonQuery {
 	}
 
 	// Fixed
-	public ArrayList<PersonGedcom> listAliveAndSingle(ArrayList<PersonGedcom> people, ArrayList<FamGedcom> families) {
+	public static ArrayList<PersonGedcom> listAliveAndSingle(ArrayList<PersonGedcom> people, ArrayList<FamGedcom> families) {
 		ArrayList<PersonGedcom> alivePeople = new ArrayList<PersonGedcom>();
 		ArrayList<PersonGedcom> aliveAndSinglePeople = new ArrayList<PersonGedcom>();
 		for (PersonGedcom person : people) {

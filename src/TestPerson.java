@@ -481,21 +481,6 @@ public class TestPerson {
 		assertEquals(valid, false);
 	}
 	
-	void testListDeceased() {
-		
-	}
-	
-	void testListRecentlyDeceased() {
-		
-	}
-	
-	void testListRecentlyBorn() {
-		
-	}
-	
-	void testListAliveAndSingle() {
-		
-	}
 	
 	
 	
