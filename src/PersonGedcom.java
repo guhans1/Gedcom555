@@ -19,16 +19,35 @@ public class PersonGedcom {
 	protected String name = "NA";
 	protected Date birthdate;
 	protected Date deathdate;
-	protected boolean alive; // TODO remove boolean alive (deprecated by hasDied)
 	protected int age = 9000; // If you see a 9000 year old: means getAge() doesn't work
 	protected String gender = "NA"; // Could be boolean? Anyways it works
 	protected boolean hasDied = false;
 	protected String fams = "NA";
 	protected String famc = "NA";
+	
+	// NOTE: This is the current family
 	protected String familyID = "NA";
+	
+	// ALL families (not as a child)
+	protected ArrayList<FamGedcom> families;
+	
+	protected ArrayList<String> childrenID = new ArrayList<String>();
+
+		
 	protected boolean valid = true;
 	protected String invalidType = "";
 
+	// Currently Unused
+	// However some of them have getters/setters
+	protected Date married;
+	protected Date divorced;
+	protected String husbandID = "NA";
+	protected String husbandName = "NA";
+	protected String wifeID = "NA";
+	protected String wifeName = "NA";
+	protected String spouseID = "NA";
+	// End unused variables
+	
 	public boolean isValid() {
 		return valid;
 	}
@@ -44,23 +63,15 @@ public class PersonGedcom {
 	public void setInvalidType(String invalidType) {
 		this.invalidType = invalidType;
 	}
-
-	// Currently Unused
-	// However some of them have getters/setters
-	protected Date married;
-	protected Date divorced;
-	protected String husbandID = "NA";
-	protected String husbandName = "NA";
-	protected String wifeID = "NA";
-	protected String wifeName = "NA";
-	protected ArrayList<String> childrenID = new ArrayList<String>();
-	protected String spouseID = "NA";
-	// End unused variables
 	
 	public boolean isHasDied() {
 		return hasDied;
 	}
-
+	
+	public boolean isAlive() {
+		return !hasDied;
+	}
+	
 	public void setHasDied(boolean hasDied) {
 		this.hasDied = hasDied;
 	}
@@ -111,17 +122,6 @@ public class PersonGedcom {
 
 	public void setDeathDate(Date deathdate) {
 		this.deathdate = deathdate;
-	}
-
-	// No set method, calculates directly from deathdate
-	public boolean isAlive() {
-		if (this.deathdate != null) {
-			alive = false;
-			return alive;
-		} else {
-			alive = true;
-			return alive;
-		}
 	}
 
 	public String getSpouseID() {
@@ -182,23 +182,13 @@ public class PersonGedcom {
 	}
 
 	public String getDeathDateAsString() {
-		if (!this.checkIfAlive()) {
+		if (this.isHasDied()) {
 			String longDeathDate = deathdate.toString();
 			String[] tokens = longDeathDate.split("\\s+");
 			String deathDate = tokens[1].trim() + " " + tokens[2].trim() + " " + tokens[5].trim();
 			return deathDate;
 		} else {
 			return "";
-		}
-
-	}
-
-	// Redundant but used in legacy code
-	public boolean checkIfAlive() {
-		if (this.isHasDied()) {
-			return false;
-		} else {
-			return true;
 		}
 
 	}
@@ -214,58 +204,12 @@ public class PersonGedcom {
 		}
 	}
 	
-	// 2 functions for age from Alive and Dead
-	// They both do similar calculations except:
-	// Alive is now - birth
-	// Dead is death - birth
-	public int getAgeIfAlive() {
-		
-		// NOTE: This code is a bit messy but its a simple calculation
-		Calendar now = Calendar.getInstance();
-		Calendar dob = Calendar.getInstance();
-		dob.setTime(birthdate);
-		int year1 = now.get(Calendar.YEAR);
-		int year2 = dob.get(Calendar.YEAR);
-		int age = year1 - year2;
-		int month1 = now.get(Calendar.MONTH);
-		int month2 = dob.get(Calendar.MONTH);
-		if (month2 > month1) {
-			age--;
-		} else if (month1 == month2) {
-			int day1 = now.get(Calendar.DAY_OF_MONTH);
-			int day2 = dob.get(Calendar.DAY_OF_MONTH);
-			if (day2 > day1) {
-				age--;
-			}
-		}
-
-		return age;
-
+	public int getAgeIfAlive() {	
+		return HelperFunctions.differenceInDatesInYears(birthdate, Calendar.getInstance().getTime());
 	}
 
 	public int getAgeIfDead() {
-
-		Calendar dod = Calendar.getInstance();
-		dod.setTime(deathdate);
-		Calendar dob = Calendar.getInstance();
-		dob.setTime(birthdate);
-		int year1 = dod.get(Calendar.YEAR);
-		int year2 = dob.get(Calendar.YEAR);
-		int age = year1 - year2;
-		int month1 = dod.get(Calendar.MONTH);
-		int month2 = dob.get(Calendar.MONTH);
-		if (month2 > month1) {
-			age--;
-		} else if (month1 == month2) {
-			int day1 = dod.get(Calendar.DAY_OF_MONTH);
-			int day2 = dob.get(Calendar.DAY_OF_MONTH);
-			if (day2 > day1) {
-				age--;
-			}
-		}
-
-		return age;
-
+		return HelperFunctions.differenceInDatesInYears(birthdate, deathdate);
 	}
 
 	// Since getAge calculates age, function is unused
@@ -281,7 +225,7 @@ public class PersonGedcom {
 	public void setFamilyID(String familyID) {
 		this.familyID = familyID;
 	}
-
+	
 	// ===========================================
 	// For family purposes (UNUSED)
 	// ===========================================

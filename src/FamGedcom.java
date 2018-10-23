@@ -9,12 +9,38 @@ public class FamGedcom {
 	protected String husbName = "";
 	protected String wifeID = "";
 	protected String wifeName = "";
-	protected ArrayList<String> children;
 	protected Date marDate;
 	protected Date divDate;
+	protected ArrayList<PersonGedcom> spousesPeople = new ArrayList<PersonGedcom>();
+	protected ArrayList<PersonGedcom> childrenPeople = new ArrayList<PersonGedcom>();
+	protected ArrayList<String> children;
 
 	public String getFamID() {
 		return famID;
+	}
+
+	public ArrayList<PersonGedcom> getSpousesPeople() {
+		return spousesPeople;
+	}
+
+	public void setSpousesPeople(ArrayList<PersonGedcom> spousesPeople) {
+		this.spousesPeople = spousesPeople;
+	}
+	
+	public void addSpousesPeople(PersonGedcom person) {
+		spousesPeople.add(person);
+	}
+
+	public ArrayList<PersonGedcom> getChildrenPeople() {
+		return childrenPeople;
+	}
+
+	public void setChildrenPeople(ArrayList<PersonGedcom> childrenPeople) {
+		this.childrenPeople = childrenPeople;
+	}
+	
+	public void addChildrenPeople(PersonGedcom person) {
+		spousesPeople.add(person);
 	}
 
 	public void setFamID(String famID) {
@@ -115,7 +141,7 @@ public class FamGedcom {
 	public void setWifeID(String wifeID) {
 		this.wifeID = wifeID;
 	}
-
+	
 	public ArrayList<String> getChildren() {
 		return children;
 	}
