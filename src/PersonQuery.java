@@ -17,7 +17,7 @@ public class PersonQuery {
 	public static ArrayList<PersonGedcom> listRecentBirths(ArrayList<PersonGedcom> people) {
 		ArrayList<PersonGedcom> recentlyBornPeople = new ArrayList<PersonGedcom>();
 		for (PersonGedcom person : people) {
-			if (person.isHasDied()) {
+			if (true) {
 				Date birthdate = person.getBirthDate();
 				if (HelperFunctions.differenceInDatesInDays(birthdate, Calendar.getInstance().getTime()) < 30) {
 					recentlyBornPeople.add(person);

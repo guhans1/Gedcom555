@@ -2,8 +2,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Test;
+
 public class ListTest {
 	
+	@Test
 	public void testListDeceased(){
 		PersonGedcom indi1 = new PersonGedcom();
 		PersonGedcom indi2 = new PersonGedcom();
@@ -40,6 +43,7 @@ public class ListTest {
 		assertEquals(shouldBe,PersonQuery.listDeceased(people));
 	}
 	
+	@Test
 	public void testListRecentlyDeceased(){
 		PersonGedcom indi1 = new PersonGedcom();
 		PersonGedcom indi2 = new PersonGedcom();
@@ -70,11 +74,12 @@ public class ListTest {
 
 
 		ArrayList<PersonGedcom> shouldBe = new ArrayList<PersonGedcom>();
-		shouldBe.add(indi1);
+		shouldBe.add(indi2);
 
 		assertEquals(shouldBe,PersonQuery.listRecentDeaths(people));
 	}
 	
+	@Test
 	public void testListRecentlyBorn(){
 		PersonGedcom indi1 = new PersonGedcom();
 		PersonGedcom indi2 = new PersonGedcom();
@@ -88,7 +93,7 @@ public class ListTest {
 		
 		indi1.setBirthDate(2017, 10, 10);
 		indi2.setBirthDate(2016, 5, 5);
-		indi3.setBirthDate(2018, 10, 18);
+		indi3.setBirthDate(2018, 10, 10);
 		indi4.setBirthDate(1990, 1, 1);
 		
 		indi1.setDeathDate(2003, 11, 1);
@@ -105,11 +110,21 @@ public class ListTest {
 
 
 		ArrayList<PersonGedcom> shouldBe = new ArrayList<PersonGedcom>();
+		ArrayList<PersonGedcom> persontest = new ArrayList<PersonGedcom>();
+		persontest = PersonQuery.listRecentBirths(people);
 		shouldBe.add(indi3);
+		
+		String out = new String();
+		
+		for(PersonGedcom person : persontest) {
+			out = out.concat(person.toString());
+		}
 
+		System.out.println(out + "!");
 		assertEquals(shouldBe,PersonQuery.listRecentBirths(people));
 	}
 	
+	@Test
 	public void testListAliveAndSingle(){
 		PersonGedcom indi1 = new PersonGedcom();
 		PersonGedcom indi2 = new PersonGedcom();

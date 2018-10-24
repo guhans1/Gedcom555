@@ -1,11 +1,14 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class GenerateTable {
 
@@ -256,7 +259,7 @@ public class GenerateTable {
 						if (splitTokens[1].trim().equals("WIFE")) {
 							wifeID = splitTokens[2].trim().replace("@", "");
 						}
-						
+
 						if (splitTokens[1].trim().equals("CHIL")) {
 							children.add(splitTokens[2].trim().replace("@", ""));
 						}
@@ -349,7 +352,7 @@ public class GenerateTable {
 		t.addColumn("Married", FamGedcom::getMarDateAsString);
 		t.addColumn("Divorced", FamGedcom::getDivDateAsString);
 		t.addColumn("Children", FamGedcom::getChildrenAsString);
-		
+
 		String outString = t.createString(families);
 		return outString;
 
@@ -357,22 +360,97 @@ public class GenerateTable {
 
 	public static void main(String[] args) throws Exception {
 
-		File file = new File("/users/guhan/Desktop/proj01test.ged");
-		
-		ArrayList<PersonGedcom> people = getPeopleFromFile(file);
-		ArrayList<FamGedcom> families = getFamFromFile(file);
-		
-		ValidityChecker vc = new ValidityChecker();
-		for(PersonGedcom person : people) {
-			vc.checkValidity(person, families, people);
+		while (true) {
+			Scanner scanner = new Scanner(System.in);
+			System.out.println("Please enter the location of your GEDCOM file:");
+			System.out.println("Or type 'default' to use the default location (/users/guhan/Desktop/proj01test.ged)");
+			String locationType = scanner.nextLine();
+			File file = null;
+			if (locationType.equals("default")) {
+				file = new File("/users/guhan/Desktop/proj01test.ged");
+			} else {
+				file = new File(locationType);
+			}
+
+			ArrayList<PersonGedcom> people = getPeopleFromFile(file);
+			ArrayList<FamGedcom> families = getFamFromFile(file);
+
+			ArrayList<PersonGedcom> unchangedPeople = getPeopleFromFile(file);
+			ArrayList<FamGedcom> unchangedFamilies = getFamFromFile(file);
+
+			ValidityChecker vc = new ValidityChecker();
+			for (PersonGedcom person : people) {
+				vc.checkValidity(person, families, people);
+			}
+
+			System.out.println("Would you like to see all the data or obtain specific data?");
+			System.out.println("Enter 1 for all the data or 2 for a specific subset of the data");
+			int temporary = scanner.nextInt();
+			if (temporary == 1) {
+				System.out.println("");
+				System.out.println("Individuals");
+				System.out.println(generatePeopleTable(people));
+				System.out.println("Families");
+				System.out.println(generateFamTable(families));
+			} else {
+				System.out.println("Please indicate your query: ");
+				System.out.println("List deceased: enter 1");
+				System.out.println("List living single: enter 2");
+				System.out.println("List recent deaths: enter 3");
+				System.out.println("List recent births: enter 4");
+				int newtemp = scanner.nextInt();
+				if (newtemp == 1) {
+					people = PersonQuery.listDeceased(people);
+					System.out.println("");
+					System.out.println("Individuals");
+					System.out.println(generatePeopleTable(people));
+					System.out.println("Families");
+					System.out.println(generateFamTable(families));
+				} else if (newtemp == 2) {
+					people = PersonQuery.listAliveAndSingle(people, families);
+					System.out.println("");
+					System.out.println("Individuals");
+					System.out.println(generatePeopleTable(people));
+					System.out.println("Families");
+					System.out.println(generateFamTable(families));
+				} else if (newtemp == 3) {
+					people = PersonQuery.listRecentDeaths(people);
+					System.out.println("");
+					System.out.println("Individuals");
+					System.out.println(generatePeopleTable(people));
+					System.out.println("Families");
+					System.out.println(generateFamTable(families));
+				} else {
+					people = PersonQuery.listRecentBirths(people);
+					System.out.println("");
+					System.out.println("Individuals");
+					System.out.println(generatePeopleTable(people));
+					System.out.println("Families");
+					System.out.println(generateFamTable(families));
+				}
+			}
+
+			System.out.println("Would you like to extract the data as a text file? Enter Y/N");
+			String textF = scanner.next();
+			if (textF.equals("Y")) {
+				BufferedWriter writer = null;
+				writer = new BufferedWriter(new FileWriter("GedcomOutput.txt"));
+				writer.write("Individuals");
+				writer.write(generatePeopleTable(unchangedPeople));
+				writer.write("Families");
+				writer.write(generateFamTable(unchangedFamilies));
+				writer.close();
+			}
+
+			System.out.println("Would you like to run this program again? Y/N ");
+			String yn = scanner.next();
+			if (yn.equals("N")) {
+				scanner.close();
+				break;
+			}
+
 		}
-		
-		// people = PersonQuery.listRecentDeaths(people);
-				
-		System.out.println("Individuals");
-		System.out.println(generatePeopleTable(people));
-		System.out.println("Families");
-		System.out.println(generateFamTable(families));
+
 	}
 
 }

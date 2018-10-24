@@ -37,8 +37,6 @@ public class PersonGedcom {
 	protected boolean valid = true;
 	protected String invalidType = "";
 
-	// Currently Unused
-	// However some of them have getters/setters
 	protected Date married;
 	protected Date divorced;
 	protected String husbandID = "NA";
@@ -233,6 +231,17 @@ public class PersonGedcom {
 	public Date getMarried() {
 		return married;
 	}
+	
+	public String getMarriedAsString() {
+		String longBirthDate = married.toString();
+		String[] tokens = longBirthDate.split("\\s+");
+		String birthDate = tokens[1].trim() + " " + tokens[2].trim() + " " + tokens[5].trim();
+		return birthDate;
+	}
+	
+	public void setMarried(Date married) {
+		this.married = married;
+	}
 
 	public void setMarried(int iYear, int iMonth, int iDay) {
 		Calendar cal3 = Calendar.getInstance();
@@ -242,6 +251,17 @@ public class PersonGedcom {
 
 	public Date getDivorced() {
 		return divorced;
+	}
+	
+	public String getDivorcedAsString() {
+		String longBirthDate = divorced.toString();
+		String[] tokens = longBirthDate.split("\\s+");
+		String birthDate = tokens[1].trim() + " " + tokens[2].trim() + " " + tokens[5].trim();
+		return birthDate;
+	}
+	
+	public void setDivorced(Date divorced) {
+		this.divorced = divorced;
 	}
 
 	public void setDivorced(int iYear, int iMonth, int iDay) {

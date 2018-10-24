@@ -1,0 +1,23 @@
+Individuals ID|            Name|Gender|   Birthday| Age|Alive|      Death|Spouse|Child|Valid|Invalid Type
+---+----------------+------+-----------+----+-----+-----------+------+-----+-----+------------
+ I1|  John /McClane/|     M|Mar 10 1800| 218|false|Oct 14 2018|    F1|   NA| true|            
+ I2| Holly /Gennaro/|     F|Jan 24 1936|  82| true|           |    F1|   NA| true|            
+ I3|  Lucy /McClane/|     F|Jun 30 1958|  60| true|           |    F4|   F1| true|            
+ I4|     Al /Dillon/|     M|Feb 03 1958| -18|false|May 16 1940|    F4|   F5| true|            
+ I5|Dutch /Schaefer/|     M|Jan 03 1950|  68| true|           |    F2|   F6| true|            
+ I6|  Ellen /Dillon/|     F|Mar 26 1979|  39| true|           |    F7|   F4| true|            
+ I7|Manny /Schaefer/|     M|Sep 05 1990|  28| true|           |    NA|   F2| true|            
+ I8|    Mac /Ripley/|     M|Nov 02 1980|  37| true|           |    F7|   NA| true|            
+ I9|   Fred /Dillon/|     M|Dec 02 1929|  30|false|Feb 02 1960|    F5|   NA| true|            
+I10|  Sally /Anders/|     F|Mar 03 1930|-130|false|May 16 1800|    F5|   NA| true|            
+I11| Jack /Schaefer/|     F|Oct 10 2018|   0| true|           |    F6|   NA| true|            
+I12|  Hannah /Short/|     F|Jan 03 1920|  10|false|May 16 1930|    F6|   NA| true|            
+FamiliesID|Husband|Wife|    Married|   Divorced|Children
+--+-------+----+-----------+-----------+--------
+F1|     I1|  I2|Nov 08 2005|           |      I3
+F2|     I5|  I3|Jun 13 1981|           |      I7
+F3|       |  I3|   Dec 31 2|           |        
+F4|     I4|  I3|Feb 24 2017|           |      I6
+F5|     I9| I10|Jun 05 1950|           |      I4
+F6|    I11| I12|Feb 04 1910|May 12 1935|      I5
+F7|     I8|  I6|Jan 19 2000|           |        
