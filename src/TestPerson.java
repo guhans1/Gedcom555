@@ -19,27 +19,28 @@ public class TestPerson {
 	// Marriage before Divorce, Tests: 9,10
 	// Marriage before Death, Tests: 11,12
 	// Divorce before Death, Tests: 13,14
+	// Marriage after 13, Tests: 15, 16
 
 	// Guy is more than 150 years old BAD!
 	@Test
 	void lessThan150YearsOldTest1() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1830, 12, 12);
 		john.setDeathDate(1990, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarried(true);
 		johnsfamily.setMarDate(1960, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
@@ -49,21 +50,21 @@ public class TestPerson {
 	@Test
 	void lessThan150YearsOldTest2() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
-		john.setBirthDate(1950, 12, 12);
+		john.setBirthDate(1940, 12, 12);
 		john.setDeathDate(1990, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1960, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, true);
@@ -73,21 +74,21 @@ public class TestPerson {
 	@Test
 	void birthBeforeDeathTest3() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(1990, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
-		johnsfamily.setMarDate(1960, 10, 10);
+		johnsfamily.setID(famID);
+		johnsfamily.setMarDate(1970, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, true);
@@ -97,21 +98,21 @@ public class TestPerson {
 	@Test
 	void birthBeforeDeathTest4() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1995, 12, 12);
 		john.setDeathDate(1990, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1960, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
@@ -121,21 +122,21 @@ public class TestPerson {
 	@Test
 	void birthBeforeMarriageTest5() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(2000, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1940, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
@@ -145,21 +146,21 @@ public class TestPerson {
 	@Test
 	void birthBeforeMarriageTest6() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(2000, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1970, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, true);
@@ -169,23 +170,23 @@ public class TestPerson {
 	@Test
 	void birthBeforeDivorceTest7() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(2000, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1970, 10, 10);
 		johnsfamily.setDivorced(true);
 		johnsfamily.setDivDate(1920, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
@@ -195,23 +196,23 @@ public class TestPerson {
 	@Test
 	void birthBeforeDivorceTest8() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(2000, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1970, 10, 10);
 		johnsfamily.setDivorced(true);
 		johnsfamily.setDivDate(1980, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, true);
@@ -221,23 +222,23 @@ public class TestPerson {
 	@Test
 	void birthBeforeDivorceTest9() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(2000, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1970, 10, 10);
 		johnsfamily.setDivorced(true);
 		johnsfamily.setDivDate(1990, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, true);
@@ -247,23 +248,23 @@ public class TestPerson {
 	@Test
 	void MarriageBeforeDivorceTest10() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(2000, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1990, 10, 10);
 		johnsfamily.setDivorced(true);
 		johnsfamily.setDivDate(1989, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
@@ -273,23 +274,23 @@ public class TestPerson {
 	@Test
 	void MarriageBeforeDeathTest11() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(2000, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1990, 10, 10);
 		johnsfamily.setDivorced(true);
 		johnsfamily.setDivDate(1991, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, true);
@@ -299,23 +300,23 @@ public class TestPerson {
 	@Test
 	void MarriageBeforeDeathTest12() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(2000, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(2001, 10, 10);
 		johnsfamily.setDivorced(true);
 		johnsfamily.setDivDate(1989, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
@@ -325,23 +326,23 @@ public class TestPerson {
 	@Test
 	void DivorceBeforeDeathTest13() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(2000, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1990, 10, 10);
 		johnsfamily.setDivorced(true);
 		johnsfamily.setDivDate(1991, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, true);
@@ -351,71 +352,157 @@ public class TestPerson {
 	@Test
 	void DivorceBeforeDeathTest14() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
 		john.setBirthDate(1950, 12, 12);
 		john.setDeathDate(1980, 10, 5);
-		john.setHasDied(true);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
+		johnsfamily.setID(famID);
 		johnsfamily.setMarDate(1970, 10, 10);
 		johnsfamily.setDivorced(true);
 		johnsfamily.setDivDate(2000, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
 	}
-	
-	//Differenece between birth date and marriage date is greater than 14 years GOOD!
+
+	// Marriage after 14 GOOD!
 	@Test
 	void MarriageAfter14Test15() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
-		john.setBirthDate(1930, 12, 12);
-		john.setDeathDate(1990, 10, 5);
-		john.setHasDied(true);
+		john.setBirthDate(1950, 12, 12);
+		john.setDeathDate(2000, 10, 5);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
-		johnsfamily.setMarDate(1955, 10, 10);
+		johnsfamily.setID(famID);
+		johnsfamily.setMarDate(1970, 10, 10);
+		johnsfamily.setDivorced(true);
+		johnsfamily.setDivDate(1990, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, true);
 	}
 
-	//Difference between birth date and marriage date is less than 14 years BAD!
+	// Marriage after 14 GOOD!
 	@Test
 	void MarriageAfter14Test16() {
 
-		PersonGedcom john = new PersonGedcom();
+		Person john = new Person();
 		john.setID("I1");
-		john.setBirthDate(1930, 12, 12);
-		john.setDeathDate(1990, 10, 5);
-		john.setHasDied(true);
+		john.setBirthDate(1950, 12, 12);
+		john.setDeathDate(2000, 10, 5);
+		john.setDead(true);
 
-		ArrayList<FamGedcom> families = new ArrayList<FamGedcom>();
-		FamGedcom johnsfamily = new FamGedcom();
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
 		String famID = john.getFams();
-		johnsfamily.setFamID(famID);
-		johnsfamily.setMarDate(1940, 10, 10);
+		johnsfamily.setID(famID);
+		johnsfamily.setMarDate(1960, 10, 10);
+		johnsfamily.setDivorced(true);
+		johnsfamily.setDivDate(1990, 10, 10);
 		families.add(johnsfamily);
 
-		ValidityChecker vc = new ValidityChecker();
-		vc.checkValidity(john, families);
+		Validity vc = new Validity();
+		vc.validityChecker(john);
+
+		Boolean valid = john.isValid();
+		assertEquals(valid, false);
+	}
+
+	// Marriage after 14 BAD!
+	@Test
+	void CorrectGenderForRoleTest17() {
+
+		Person john = new Person();
+		john.setID("I1");
+		john.setBirthDate(1950, 12, 12);
+		john.setDeathDate(2000, 10, 5);
+		john.setDead(true);
+		john.setGender("M");
+		john.setFams("F1");
+
+		Person jane = new Person();
+		jane.setID("I2");
+		jane.setBirthDate(1950, 12, 12);
+		jane.setDeathDate(2000, 10, 5);
+		jane.setDead(true);
+		jane.setGender("F");
+		jane.setFams("F1");
+
+		ArrayList<Person> people = new ArrayList<Person>();
+		people.add(john);
+		people.add(jane);
+
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
+		String famID = john.getFams();
+		johnsfamily.setID(famID);
+		johnsfamily.setMarDate(1960, 10, 10);
+		johnsfamily.setMarried(true);
+		johnsfamily.setHusbID("I1");
+		johnsfamily.setWifeID("I2");
+		families.add(johnsfamily);
+
+		Validity vc = new Validity();
+		vc.validityChecker(john);
+
+		Boolean valid = john.isValid();
+		assertEquals(valid, true);
+	}
+
+	// BAD!
+	@Test
+	void CorrectGenderForRoleTest18() {
+
+		Person john = new Person();
+		john.setID("I1");
+		john.setBirthDate(1950, 12, 12);
+		john.setDeathDate(2000, 10, 5);
+		john.setDead(true);
+		john.setGender("F");
+		john.setFams("F1");
+
+		Person jane = new Person();
+		jane.setID("I2");
+		jane.setBirthDate(1950, 12, 12);
+		jane.setDeathDate(2000, 10, 5);
+		jane.setDead(true);
+		jane.setGender("F");
+		jane.setFams("F1");
+
+		ArrayList<Person> people = new ArrayList<Person>();
+		people.add(john);
+		people.add(jane);
+
+		ArrayList<Family> families = new ArrayList<Family>();
+		Family johnsfamily = new Family();
+		String famID = john.getFams();
+		johnsfamily.setID(famID);
+		johnsfamily.setMarDate(1960, 10, 10);
+		johnsfamily.setMarried(true);
+		johnsfamily.setHusbID("I1");
+		johnsfamily.setWifeID("I2");
+		families.add(johnsfamily);
+
+		Validity vc = new Validity();
+		vc.validityChecker(john);
 
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
