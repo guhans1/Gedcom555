@@ -83,5 +83,51 @@ public class PersonQuery {
 		}
 		return aliveAndMarriedPeople;
 	}
+	
+	public static ArrayList<Person> upcomingBirthdays(ArrayList<Person> people) {
+		ArrayList<Person> birthdays = new ArrayList<Person>();
+		Date today = Calendar.getInstance().getTime();
+		for (Person person : people) {
+			Date birthdate = person.getBirthdate();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(birthdate);
+			cal.set(Calendar.YEAR, Calendar.getInstance().getWeekYear());
+			birthdate = cal.getTime();
+			if(today.before(birthdate)) {
+				long d = HelperFunctions.differenceInDatesInDays(today, birthdate);
+				if(d<32) {
+					birthdays.add(person);
+				}
+			}
+		}
+		return birthdays;
+	}
+	
+	public static ArrayList<Family> upcomingAnniversaries(ArrayList<Family> families) {
+		ArrayList<Family> anniversaries = new ArrayList<Family>();
+		Date today = Calendar.getInstance().getTime();
+		for(Family family : families) {
+			if((!(family.getHusband() == null)) && (!(family.getWife() == null))) {
+				if(family.getHusband().isAlive() && family.getWife().isAlive()) {
+					if(!family.isDivorced()) {
+						Date marDate = family.getMarDate();
+						Calendar cal = Calendar.getInstance();
+						cal.setTime(marDate);
+						cal.set(Calendar.YEAR, Calendar.getInstance().getWeekYear());
+						marDate = cal.getTime();
+						if(today.before(marDate)) {
+							long d = HelperFunctions.differenceInDatesInDays(today, marDate);
+							if(d<32) {
+								anniversaries.add(family);
+							}
+						}
+					}
+				}
+			}
+		}
+		return anniversaries;
+	}
+	
+	
 
 }

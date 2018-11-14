@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Person extends AbstractUnit {
 
@@ -15,6 +17,9 @@ public class Person extends AbstractUnit {
 	protected String famc = "NA";
 	protected ArrayList<Family> families = new ArrayList<Family>();
 	protected ArrayList<Person> children = new ArrayList<Person>();
+	protected ArrayList<Person> spouses = new ArrayList<Person>();
+	protected ArrayList<String> childrenIDs = new ArrayList<String>();
+	protected ArrayList<String> spousesIDs = new ArrayList<String>();
 	
 	// ============================================
 	// NAME/GENDER
@@ -183,6 +188,7 @@ public class Person extends AbstractUnit {
 
 	
 	public ArrayList<Person> getChildren() {
+		this.setChildren();
 		return children;
 	}
 	
@@ -194,6 +200,47 @@ public class Person extends AbstractUnit {
 				children.add(child);
 			}
 		}
+	}
+	
+	public ArrayList<String> getChildrenIDs() {
+		this.setChildren();
+		for(Person person : children) {
+			childrenIDs.add(person.getID());
+		}
+		Set<String> hs = new HashSet<>();
+		hs.addAll(childrenIDs);
+		childrenIDs.clear();
+		childrenIDs.addAll(hs);
+		return childrenIDs;
+	}
+	
+	public ArrayList<Person> getSpouses() {
+		this.setSpouses();
+		return spouses;
+	}
+	
+	// Provides children from all marriages
+
+	public void setSpouses() {
+		for(Family family : families) {
+			if(this.getGender().equals("M")) {
+				spouses.add(family.getWife());
+			} else {
+				spouses.add(family.getHusband());
+			}
+		}
+	}
+	
+	public ArrayList<String> getSpousesIDs() {
+		this.setSpouses();
+		for(Person person : spouses) {
+			spousesIDs.add(person.getID());
+		}
+		Set<String> hs = new HashSet<>();
+		hs.addAll(spousesIDs);
+		spousesIDs.clear();
+		spousesIDs.addAll(hs);
+		return spousesIDs;
 	}
 	// ============================================
 	// END SECTION

@@ -12,6 +12,24 @@ public class Family extends AbstractUnit {
 	protected Date divDate;
 	protected ArrayList<Person> children = new ArrayList<Person>();
 	protected ArrayList<String> childrenIDs = new ArrayList<String>();
+	public Person getHusband() {
+		return husband;
+	}
+
+	public void setHusband(Person husband) {
+		this.husband = husband;
+	}
+
+	public Person getWife() {
+		return wife;
+	}
+
+	public void setWife(Person wife) {
+		this.wife = wife;
+	}
+
+	protected Person husband = new Person();
+	protected Person wife = new Person();
 	
 	public boolean isMarried() {
 		return isMarried;

@@ -16,8 +16,10 @@ public class GenerateTable {
 		t.addColumn("Age", Person::getAge);
 		t.addColumn("Alive", Person::isAlive);
 		t.addColumn("Death", Person::getDeathDateAsString);
-		t.addColumn("Spouse", Person::getFams);
-		t.addColumn("Child", Person::getFamc);
+		t.addColumn("Current Spouse of", Person::getFams);
+		t.addColumn("Spouses", Person::getSpousesIDs);
+		t.addColumn("Child of", Person::getFamc);
+		t.addColumn("Children", Person::getChildrenIDs);
 		t.addColumn("Valid", Person::isValid);
 		t.addColumn("Invalid Type", Person::getInvalidType);
 
@@ -44,10 +46,13 @@ public class GenerateTable {
 	
 	public static void main(String[] args) throws Exception {
 		
-		File file = new File("/users/guhan/Desktop/proj02test.ged");
+		File file = new File("/users/guhan/Desktop/proj05test.ged");
 		ArrayList<Person> people = GedcomScraper.getPeopleFromFile(file);
 		ArrayList<Family> families = GedcomScraper.getFamFromFile(file);
 		HelperFunctions.allocatePersonToFam(people, families);
+		HelperFunctions.addChildrenToFamilies(people, families);
+		HelperFunctions.addHusbandToFamilies(people, families);
+		HelperFunctions.addWifeToFamilies(people, families);
 		
 		Validity vc = new Validity();
 		for (Person person : people) {
@@ -67,6 +72,9 @@ public class GenerateTable {
 		
 		System.out.println("List Deceased US29");
 		System.out.println(generatePeopleTable(PersonQuery.listDeceased(people)));
+				
+		System.out.println("List Living And Married US30");
+		System.out.println(generatePeopleTable(PersonQuery.listLivingMarried(people)));
 		
 		System.out.println("List Living Single US31");
 		System.out.println(generatePeopleTable(PersonQuery.listAliveAndSingle(people, families)));
@@ -77,41 +85,51 @@ public class GenerateTable {
 		System.out.println("List Recent Deaths US36");
 		System.out.println(generatePeopleTable(PersonQuery.listRecentDeaths(people)));
 		
-		System.out.println("List Living And Married US30");
-		System.out.println(generatePeopleTable(PersonQuery.listLivingMarried(people)));
+		System.out.println(("List Upcoming Birthdays US38"));
+		System.out.println(generatePeopleTable(PersonQuery.upcomingBirthdays(people)));
+		
+		System.out.println("List Upcoming Anniversaries US39");
+		System.out.println(generateFamTable(PersonQuery.upcomingAnniversaries(families)));
 		
 		BufferedWriter writer = null;
 		writer = new BufferedWriter(new FileWriter("GedcomOutput.txt"));
 		writer.write(GenerateErrorMessage.generateMsg(people, families));
-		writer.write("\n");
+		writer.write(System.lineSeparator());
 		writer.write("Individuals");
-		writer.write("\n");
+		writer.write(System.lineSeparator());
 		writer.write(generatePeopleTable(people));
-		writer.write("\n");
+		writer.write(System.lineSeparator());
 		writer.write("Families");
-		writer.write("\n");
+		writer.write(System.lineSeparator());
 		writer.write(generateFamTable(families));
-		writer.write("\n");
+		writer.write(System.lineSeparator());
 		writer.write("List Deceased US29");
-		writer.write("\n");
+		writer.write(System.lineSeparator());
 		writer.write(generatePeopleTable(PersonQuery.listDeceased(people)));
-		writer.write("\n");
-		writer.write("List Living Single US31");
-		writer.write("\n");
-		writer.write(generatePeopleTable(PersonQuery.listAliveAndSingle(people, families)));
-		writer.write("\n");
-		writer.write("List Recent Births US35");
-		writer.write("\n");
-		writer.write(generatePeopleTable(PersonQuery.listRecentBirths(people)));
-		writer.write("\n");
-		writer.write("List Recent Deaths US36");
-		writer.write("\n");
-		writer.write(generatePeopleTable(PersonQuery.listRecentDeaths(people)));
-		writer.write("\n");
+		writer.write(System.lineSeparator());
 		writer.write("List Living And Married US30");
-		writer.write("\n");
+		writer.write(System.lineSeparator());
 		writer.write(generatePeopleTable(PersonQuery.listLivingMarried(people)));
-		writer.write("\n");
+		writer.write(System.lineSeparator());
+		writer.write("List Living Single US31");
+		writer.write(System.lineSeparator());
+		writer.write(generatePeopleTable(PersonQuery.listAliveAndSingle(people, families)));
+		writer.write(System.lineSeparator());
+		writer.write("List Recent Births US35");
+		writer.write(System.lineSeparator());
+		writer.write(generatePeopleTable(PersonQuery.listRecentBirths(people)));
+		writer.write(System.lineSeparator());
+		writer.write("List Recent Deaths US36");
+		writer.write(System.lineSeparator());
+		writer.write(generatePeopleTable(PersonQuery.listRecentDeaths(people)));
+		writer.write(System.lineSeparator());
+		writer.write("List Upcoming Birthdays US38");
+		writer.write(System.lineSeparator());
+		writer.write(generatePeopleTable(PersonQuery.upcomingBirthdays(people)));
+		writer.write(System.lineSeparator());
+		writer.write("List Upcoming Anniversaries US39");
+		writer.write(System.lineSeparator());
+		writer.write(generateFamTable(PersonQuery.upcomingAnniversaries(families)));
 		writer.close();
 	}
 

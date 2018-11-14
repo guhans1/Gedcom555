@@ -8,6 +8,7 @@ import static java.lang.Math.*;
 
 public class TestPerson {
 
+	
 	// REMEMBER: You need to give enough dummy info for the tests to work
 	// The validity checker needs a marriage date at least to work
 
@@ -507,5 +508,6 @@ public class TestPerson {
 		Boolean valid = john.isValid();
 		assertEquals(valid, false);
 	}
+	
 
 }

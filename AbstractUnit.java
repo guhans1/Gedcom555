@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class AbstractUnit {
+public abstract class AbstractUnit {
 	
 	protected String ID = "NA";
 	protected boolean valid = true;
@@ -35,6 +35,11 @@ public class AbstractUnit {
 
 	public void setValid(boolean valid) {
 		this.valid = valid;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getID();
 	}
 		
 }

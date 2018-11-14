@@ -7,35 +7,87 @@ import java.util.concurrent.TimeUnit;
 public class HelperFunctions {
 
 	public static void allocatePersonToFam(ArrayList<Person> people, ArrayList<Family> families) {
-		
+
 		// Purpose is to connect each person with family(ies)
 		// Each person has famc and (current) fams
 		// They may have belonged to families in the past (e.g divorced and remarried)
-		
-		for(Person person : people) {
-			for(Family family : families) {
-				if(family.getHusbID().equals(person.getID())) {
+
+		for (Person person : people) {
+			for (Family family : families) {
+				if (family.getHusbID().equals(person.getID())) {
 					person.addFamily(family);
-				} else if(family.getWifeID().equals(person.getID())) {
+				} else if (family.getWifeID().equals(person.getID())) {
 					person.addFamily(family);
 				}
 			}
 		}
-		
+
+	}
+
+	public static void addChildrenToFamilies(ArrayList<Person> people, ArrayList<Family> families) {
+
+		// Adds children to families based on their strings in childrenIDs
+
+		for (Family family : families) {
+			for (Person person : people) {
+				ArrayList<String> childrenIDs = family.getChildrenIDs();
+				for (String childID : childrenIDs) {
+					if (person.getID().equals(childID)) {
+						family.addChildren(person);
+					}
+				}
+			}
+		}
+
 	}
 	
-	public static <T> List<T> findDuplicates(List<T> list){
-
-	    List<T> nonDistinctElements = new ArrayList<>();
-
-	    for(T s : list)
-	      if(list.indexOf(s) != list.lastIndexOf(s))
-	        if(!nonDistinctElements.contains(s))
-	          nonDistinctElements.add(s);
-
-	    return nonDistinctElements;
-	  }
+	public static void addHusbandToFamilies(ArrayList<Person> people, ArrayList<Family> families) {
+		for(Family family : families) {
+			String husbID = family.getHusbID();
+			for(Person person : people) {
+				if(person.getID().equals(husbID)) {
+					family.setHusband(person);
+				}
+			}
+		}
+	}
 	
+	public static void addWifeToFamilies(ArrayList<Person> people, ArrayList<Family> families) {
+		for(Family family : families) {
+			String wifeID = family.getWifeID();
+			for(Person person : people) {
+				if(person.getID().equals(wifeID)) {
+					family.setWife(person);
+				}
+			}
+		}
+	}
+
+	public static String getFirstName(String name) {
+		int i = name.indexOf(' ');
+		if (i > -1) {
+			return name.substring(0, i);
+		} else {
+			return name;
+		}
+	}
+	
+	public static String getLastName(String name) {
+		String[] words = name.split(" ");
+		String lastName = words[words.length-1];
+		return lastName;
+	}
+
+	public static <T> List<T> findDuplicates(List<T> list) {
+		List<T> elements = new ArrayList<>();
+		for (T s : list)
+			if (list.indexOf(s) != list.lastIndexOf(s))
+				if (!elements.contains(s))
+					elements.add(s);
+
+		return elements;
+	}
+
 	public static int differenceInDatesInYears(Date earlierDate, Date laterDate) {
 		Calendar dod = Calendar.getInstance();
 		dod.setTime(laterDate);
@@ -57,12 +109,12 @@ public class HelperFunctions {
 		}
 		return age;
 	}
-	
+
 	public static long differenceInDatesInDays(Date earlierDate, Date laterDate) {
-	    long diffInMilliseconds = laterDate.getTime() - earlierDate.getTime();
-	    return TimeUnit.DAYS.convert(diffInMilliseconds,TimeUnit.MILLISECONDS);
+		long diffInMilliseconds = laterDate.getTime() - earlierDate.getTime();
+		return TimeUnit.DAYS.convert(diffInMilliseconds, TimeUnit.MILLISECONDS);
 	}
-	
+
 	public static int changeMonthFormatToInt(String month) {
 
 		int monthNo = 0;
@@ -104,5 +156,5 @@ public class HelperFunctions {
 		}
 		return monthNo;
 	}
-	
+
 }

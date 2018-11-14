@@ -1,0 +1,201 @@
+US11: Person I1 is married multiple times (bigamy/polygamy)
+US10: Person I1 has marriage date before the age of 14
+US07: Person I2 is age: 188 which is over 150 years old
+US02: Person I2 marriage date is before birth date on Mar 04 1830
+US10: Person I2 has marriage date before the age of 14
+US07: Person I3 is age: 168 which is over 150 years old
+US02: Person I3 marriage date is before birth date on Jan 04 1850
+US10: Person I3 has marriage date before the age of 14
+US22: Person I4 ID duplicated in list of people
+US22: Person I4 ID duplicated in list of people
+US02: Person I6 marriage date is before birth date on Jun 10 1942
+US10: Person I6 has marriage date before the age of 14
+US07: Person I8 is age: 175 which is over 150 years old
+US02: Person I8 marriage date is before birth date on Jun 05 1810
+US10: Person I8 has marriage date before the age of 14
+US02: Person I9 marriage date is before birth date on Dec 10 1915
+US10: Person I9 has marriage date before the age of 14
+US02: Person I10 marriage date is before birth date on Mar 09 1908
+US10: Person I10 has marriage date before the age of 14
+US03: Person I11 death date on Apr 02 1912 before birth date on Jun 11 1990
+US02: Person I11 marriage date is before birth date on Jun 11 1990
+US10: Person I11 has marriage date before the age of 14
+US02: Person I12 marriage date is before birth date on Mar 10 1975
+US01: Person I12 has birth date and/or death date after current date
+US11: Person I12 is married multiple times (bigamy/polygamy)
+US10: Person I12 has marriage date before the age of 14
+US11: Person I15 is married multiple times (bigamy/polygamy)
+US10: Person I15 has marriage date before the age of 14
+US06: Person I18 death date on Apr 19 2001 before divorce date
+US05: Person I21 death date on Apr 02 2035 before marriage date
+US01: Person I21 has birth date and/or death date after current date
+US10: Person I22 has marriage date before the age of 14
+US21: Person I23 is gender M which is the wrong gender in at least one of their families
+US04: Person I24 divorce date before marriage date
+US01: Person I24 has birth date and/or death date after current date
+US10: Person I24 has marriage date before the age of 14
+US04: Person I42 divorce date before marriage date
+US01: Person I42 has birth date and/or death date after current date
+US10: Person I42 has marriage date before the age of 14
+US09: Family F1 has children born 9 months after the death of the father or born after the death of the mother
+US09: Family F2 has children born 9 months after the death of the father or born after the death of the mother
+US12: Family F3 has father's birthdate more than 80 years before child's birthdate or mother's birthdate more than 60 years before child's birthdate 
+US09: Family F4 has children born 9 months after the death of the father or born after the death of the mother
+US25: Family F4 has multiple children with the same first name
+US09: Family F5 has children born 9 months after the death of the father or born after the death of the mother
+US12: Family F5 has father's birthdate more than 80 years before child's birthdate or mother's birthdate more than 60 years before child's birthdate 
+US08: Family F7 has children born before the marriage of parents or 9 months after the divorce of parents
+US15: Family F12 has 16 children which is more than 14
+US25: Family F12 has multiple children with the same first name
+US01: Family F15 has marriage date and/or divorce date after current date
+US01: Family F16 has marriage date and/or divorce date after current date
+US01: Family F17 has marriage date and/or divorce date after current date
+
+Individuals
+ ID|           Name|Gender|   Birthday|Age|Alive|      Death|Current Spouse of|       Spouses|Child of|                                                                             Children|Valid|            Invalid Type
+---+---------------+------+-----------+---+-----+-----------+-----------------+--------------+--------+-------------------------------------------------------------------------------------+-----+------------------------
+ I1|Aadarsh /Kumar/|     M|Mar 20 1935| 39|false|Aug 06 1974|               F2|      [I4, I6]|      F3|                                                                        [I12, I5, I7]|false|            [US11, US10]
+ I2|Krishna /Kumar/|     M|Mar 04 1830|188| true|           |               F3|          [I3]|      NA|                                                                                 [I1]|false|      [US07, US02, US10]
+ I3|    Gauri /Raj/|     F|Jan 04 1850|168| true|           |               F3|          [I2]|      NA|                                                                                 [I1]|false|      [US07, US02, US10]
+ I4|Indira /Suresh/|     F|Aug 10 1940| 29|false|Jan 22 1970|               F2|          [I1]|      F4|                                                                                 [I5]|false|                  [US22]
+ I4|Indira /Suresh/|     F|Aug 10 1940| 29|false|Jan 22 1970|               F2|          [I1]|      F4|                                                                                 [I5]|false|                  [US22]
+ I5| Athish /Kumar/|     M|Nov 04 1975| 43| true|           |               NA|            []|      F2|                                                                                   []| true|                      []
+ I6|   Neha /Singh/|     F|Jun 10 1942| 76| true|           |               F1|          [I1]|      F5|                                                                            [I12, I7]|false|            [US02, US10]
+ I7| Ashray /Kumar/|     M|Jan 21 1977| 41| true|           |               F7|    [I18, I17]|      F1|                                                                                [I19]| true|                      []
+ I8|Gulshan /Singh/|     M|Jun 05 1810|175|false|Sep 02 1985|               F5|          [I9]|      NA|                                                                                 [I6]|false|      [US07, US02, US10]
+ I9|   Tara /Singh/|     F|Dec 10 1915| 64|false|Jan 05 1980|               F5|          [I8]|      NA|                                                                                 [I6]|false|            [US02, US10]
+I10| Suresh /Mohan/|     M|Mar 09 1908| 70|false|Mar 02 1979|               F4|         [I11]|      NA|                                                                                 [I4]|false|            [US02, US10]
+I11|  Shakti /Ravi/|     F|Jun 11 1990|-79|false|Apr 02 1912|               F4|         [I10]|      NA|                                                                                 [I4]|false|      [US03, US02, US10]
+I12|  Meena /Kumar/|     F|Mar 10 1975| 75|false|Sep 29 2050|              F11|[NA, I13, I14]|      F1|                                                                           [I15, I16]|false|[US02, US01, US11, US10]
+I13| Tom /Cleverly/|     M|May 20 1974| 44| true|           |               F8|         [I12]|      NA|                                                                                [I16]| true|                      []
+I14|    Sher /Khan/|     M|Aug 08 1970| 48| true|           |              F12|    [I20, I12]|      NA|[I40, I31, I30, I41, I33, I32, I35, I34, I15, I26, I37, I36, I28, I39, I27, I38, I29]| true|                      []
+I15|  Babber /Sher/|     M|Feb 13 1999| 19| true|           |              F14|    [I22, I25]|     F11|                                                                                   []|false|            [US11, US10]
+I16|Mark /Cleverly/|     M|Jan 12 2003| 15| true|           |              F15|         [I23]|      F8|                                                                                [I24]| true|                      []
+I17| Pooja /Thakur/|     F|Apr 11 1978| 40| true|           |               F6|          [I7]|      NA|                                                                                   []| true|                      []
+I18|    Hina /Khan/|     F|Aug 06 1977| 23|false|Apr 19 2001|               F7|          [I7]|      NA|                                                                                [I19]|false|                  [US06]
+I19|   Darp /Kumar/|     M|Apr 10 1999| 19| true|           |              F16|         [I21]|      F7|                                                                                   []| true|                      []
+I20|    Tina /Khan/|     F|Apr 02 1979| 39| true|           |              F12|         [I14]|      NA|     [I40, I31, I30, I41, I33, I32, I35, I34, I26, I37, I36, I28, I39, I27, I38, I29]| true|                      []
+I21| Pooja /Shinde/|     F|Feb 10 2003| 32|false|Apr 02 2035|              F16|         [I19]|      NA|                                                                                   []|false|            [US05, US01]
+I22| Narin /Sultan/|     F|Jan 02 1999| 19| true|           |              F14|         [I15]|      NA|                                                                                   []|false|                  [US10]
+I23| Sofia /Albert/|     M|Mar 31 2003| 15| true|           |              F15|         [I23]|      NA|                                                                                [I24]|false|                  [US21]
+I24|Andy /Cleverly/|     M|May 04 2030|-12| true|           |              F17|         [I42]|     F15|                                                                                   []|false|      [US04, US01, US10]
+I25|      Shifa /R/|     F|Apr 13 1998| 20| true|           |              F13|         [I15]|      NA|                                                                                   []| true|                      []
+I26|   Arbaz /Khan/|     M|Dec 02 1999| 18| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I27|   Arbaz /Khan/|     M|Dec 02 1999| 18| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I28|Mallaika /Khan/|     F|Jan 01 2001| 17| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I29|   Imran /Khan/|     M|Feb 02 2002| 16| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I30|  Salman /Khan/|     M|Mar 03 2003| 15| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I31|   Sonam /Khan/|     F|Apr 04 2004| 14| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I32|  Aleeza /Khan/|     F|May 05 2005| 13| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I33|    Shah /Khan/|     M|Jun 06 2006| 12| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I34|  Taimur /Khan/|     M|Jan 07 2007| 11| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I35| Kareena /Khan/|     F|Aug 08 2008| 10| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I36|  Ismail /Khan/|     M|Sep 09 2009|  9| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I37|  Frarah /Khan/|     F|Oct 10 2010|  8| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I38| Ghengiz /Khan/|     M|Nov 11 2011|  7| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I39| Katrina /Khan/|     F|Dec 12 2012|  5| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I40|   Nawaz /Khan/|     M|Dec 03 2013|  4| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I41|  Junaid /Khan/|     M|Jan 07 2015|  3| true|           |               NA|            []|     F12|                                                                                   []| true|                      []
+I42|       Jnae /B/|     F|Feb 08 2030|-12| true|           |              F17|         [I24]|      NA|                                                                                   []|false|      [US04, US01, US10]
+
+Families
+ ID|Husband|Wife|    Married|   Divorced|                                                       Children
+---+-------+----+-----------+-----------+---------------------------------------------------------------
+ F1|     I1|  I6|Jan 03 1941|           |                                                         I7 I12
+ F2|     I1|  I4|Mar 02 1962|           |                                                             I5
+ F3|     I2|  I3|   Dec 31 2|           |                                                             I1
+ F4|    I10| I11|   Dec 31 2|           |                                                             I4
+ F5|     I8|  I9|   Dec 31 2|           |                                                             I6
+ F6|     I7| I17|Jan 01 2007|           |                                                               
+ F7|     I7| I18|Aug 13 2000|May 02 2005|                                                            I19
+ F8|    I13| I12|Sep 08 2002|           |                                                            I16
+ F9|       | I12|Jun 13 2002|           |                                                               
+F10|       | I12|   Dec 31 2|           |                                                               
+F11|    I14| I12|Sep 04 1998|Oct 01 2000|                                                            I15
+F12|    I14| I20|Feb 03 1999|           |I26 I27 I28 I29 I30 I31 I32 I33 I34 I35 I36 I37 I38 I39 I40 I41
+F13|    I15| I25|Mar 07 2015|           |                                                               
+F14|    I15| I22|Aug 11 2000|           |                                                               
+F15|    I16| I23|Dec 11 2025|           |                                                            I24
+F16|    I19| I21|Feb 04 2040|           |                                                               
+F17|    I24| I42|Jan 02 2040|May 01 2039|                                                               
+
+List Deceased US29
+ ID|           Name|Gender|   Birthday|Age|Alive|      Death|Current Spouse of|       Spouses|Child of|     Children|Valid|            Invalid Type
+---+---------------+------+-----------+---+-----+-----------+-----------------+--------------+--------+-------------+-----+------------------------
+ I1|Aadarsh /Kumar/|     M|Mar 20 1935| 39|false|Aug 06 1974|               F2|      [I4, I6]|      F3|[I12, I5, I7]|false|            [US11, US10]
+ I4|Indira /Suresh/|     F|Aug 10 1940| 29|false|Jan 22 1970|               F2|          [I1]|      F4|         [I5]|false|                  [US22]
+ I4|Indira /Suresh/|     F|Aug 10 1940| 29|false|Jan 22 1970|               F2|          [I1]|      F4|         [I5]|false|                  [US22]
+ I8|Gulshan /Singh/|     M|Jun 05 1810|175|false|Sep 02 1985|               F5|          [I9]|      NA|         [I6]|false|      [US07, US02, US10]
+ I9|   Tara /Singh/|     F|Dec 10 1915| 64|false|Jan 05 1980|               F5|          [I8]|      NA|         [I6]|false|            [US02, US10]
+I10| Suresh /Mohan/|     M|Mar 09 1908| 70|false|Mar 02 1979|               F4|         [I11]|      NA|         [I4]|false|            [US02, US10]
+I11|  Shakti /Ravi/|     F|Jun 11 1990|-79|false|Apr 02 1912|               F4|         [I10]|      NA|         [I4]|false|      [US03, US02, US10]
+I12|  Meena /Kumar/|     F|Mar 10 1975| 75|false|Sep 29 2050|              F11|[NA, I13, I14]|      F1|   [I15, I16]|false|[US02, US01, US11, US10]
+I18|    Hina /Khan/|     F|Aug 06 1977| 23|false|Apr 19 2001|               F7|          [I7]|      NA|        [I19]|false|                  [US06]
+I21| Pooja /Shinde/|     F|Feb 10 2003| 32|false|Apr 02 2035|              F16|         [I19]|      NA|           []|false|            [US05, US01]
+
+List Living And Married US30
+ ID|           Name|Gender|   Birthday|Age|Alive|Death|Current Spouse of|   Spouses|Child of|                                                                             Children|Valid|Invalid Type
+---+---------------+------+-----------+---+-----+-----+-----------------+----------+--------+-------------------------------------------------------------------------------------+-----+------------
+ I6|   Neha /Singh/|     F|Jun 10 1942| 76| true|     |               F1|      [I1]|      F5|                                                                            [I12, I7]|false|[US02, US10]
+ I7| Ashray /Kumar/|     M|Jan 21 1977| 41| true|     |               F7|[I18, I17]|      F1|                                                                                [I19]| true|          []
+I13| Tom /Cleverly/|     M|May 20 1974| 44| true|     |               F8|     [I12]|      NA|                                                                                [I16]| true|          []
+I14|    Sher /Khan/|     M|Aug 08 1970| 48| true|     |              F12|[I20, I12]|      NA|[I40, I31, I30, I41, I33, I32, I35, I34, I15, I26, I37, I36, I28, I39, I27, I38, I29]| true|          []
+I15|  Babber /Sher/|     M|Feb 13 1999| 19| true|     |              F14|[I22, I25]|     F11|                                                                                   []|false|[US11, US10]
+I15|  Babber /Sher/|     M|Feb 13 1999| 19| true|     |              F14|[I22, I25]|     F11|                                                                                   []|false|[US11, US10]
+I16|Mark /Cleverly/|     M|Jan 12 2003| 15| true|     |              F15|     [I23]|      F8|                                                                                [I24]| true|          []
+I17| Pooja /Thakur/|     F|Apr 11 1978| 40| true|     |               F6|      [I7]|      NA|                                                                                   []| true|          []
+I19|   Darp /Kumar/|     M|Apr 10 1999| 19| true|     |              F16|     [I21]|      F7|                                                                                   []| true|          []
+I20|    Tina /Khan/|     F|Apr 02 1979| 39| true|     |              F12|     [I14]|      NA|     [I40, I31, I30, I41, I33, I32, I35, I34, I26, I37, I36, I28, I39, I27, I38, I29]| true|          []
+I22| Narin /Sultan/|     F|Jan 02 1999| 19| true|     |              F14|     [I15]|      NA|                                                                                   []|false|      [US10]
+I23| Sofia /Albert/|     M|Mar 31 2003| 15| true|     |              F15|     [I23]|      NA|                                                                                [I24]|false|      [US21]
+I25|      Shifa /R/|     F|Apr 13 1998| 20| true|     |              F13|     [I15]|      NA|                                                                                   []| true|          []
+
+List Living Single US31
+ ID|           Name|Gender|   Birthday|Age|Alive|Death|Current Spouse of|   Spouses|Child of|Children|Valid|      Invalid Type
+---+---------------+------+-----------+---+-----+-----+-----------------+----------+--------+--------+-----+------------------
+ I5| Athish /Kumar/|     M|Nov 04 1975| 43| true|     |               NA|        []|      F2|      []| true|                []
+ I7| Ashray /Kumar/|     M|Jan 21 1977| 41| true|     |               F7|[I18, I17]|      F1|   [I19]| true|                []
+I24|Andy /Cleverly/|     M|May 04 2030|-12| true|     |              F17|     [I42]|     F15|      []|false|[US04, US01, US10]
+I26|   Arbaz /Khan/|     M|Dec 02 1999| 18| true|     |               NA|        []|     F12|      []| true|                []
+I27|   Arbaz /Khan/|     M|Dec 02 1999| 18| true|     |               NA|        []|     F12|      []| true|                []
+I28|Mallaika /Khan/|     F|Jan 01 2001| 17| true|     |               NA|        []|     F12|      []| true|                []
+I29|   Imran /Khan/|     M|Feb 02 2002| 16| true|     |               NA|        []|     F12|      []| true|                []
+I30|  Salman /Khan/|     M|Mar 03 2003| 15| true|     |               NA|        []|     F12|      []| true|                []
+I31|   Sonam /Khan/|     F|Apr 04 2004| 14| true|     |               NA|        []|     F12|      []| true|                []
+I32|  Aleeza /Khan/|     F|May 05 2005| 13| true|     |               NA|        []|     F12|      []| true|                []
+I33|    Shah /Khan/|     M|Jun 06 2006| 12| true|     |               NA|        []|     F12|      []| true|                []
+I34|  Taimur /Khan/|     M|Jan 07 2007| 11| true|     |               NA|        []|     F12|      []| true|                []
+I35| Kareena /Khan/|     F|Aug 08 2008| 10| true|     |               NA|        []|     F12|      []| true|                []
+I36|  Ismail /Khan/|     M|Sep 09 2009|  9| true|     |               NA|        []|     F12|      []| true|                []
+I37|  Frarah /Khan/|     F|Oct 10 2010|  8| true|     |               NA|        []|     F12|      []| true|                []
+I38| Ghengiz /Khan/|     M|Nov 11 2011|  7| true|     |               NA|        []|     F12|      []| true|                []
+I39| Katrina /Khan/|     F|Dec 12 2012|  5| true|     |               NA|        []|     F12|      []| true|                []
+I40|   Nawaz /Khan/|     M|Dec 03 2013|  4| true|     |               NA|        []|     F12|      []| true|                []
+I41|  Junaid /Khan/|     M|Jan 07 2015|  3| true|     |               NA|        []|     F12|      []| true|                []
+I42|       Jnae /B/|     F|Feb 08 2030|-12| true|     |              F17|     [I24]|      NA|      []|false|[US04, US01, US10]
+
+List Recent Births US35
+ ID|           Name|Gender|   Birthday|Age|Alive|Death|Current Spouse of|Spouses|Child of|Children|Valid|      Invalid Type
+---+---------------+------+-----------+---+-----+-----+-----------------+-------+--------+--------+-----+------------------
+I24|Andy /Cleverly/|     M|May 04 2030|-12| true|     |              F17|  [I42]|     F15|      []|false|[US04, US01, US10]
+I42|       Jnae /B/|     F|Feb 08 2030|-12| true|     |              F17|  [I24]|      NA|      []|false|[US04, US01, US10]
+
+List Recent Deaths US36
+ ID|          Name|Gender|   Birthday|Age|Alive|      Death|Current Spouse of|       Spouses|Child of|  Children|Valid|            Invalid Type
+---+--------------+------+-----------+---+-----+-----------+-----------------+--------------+--------+----------+-----+------------------------
+I12| Meena /Kumar/|     F|Mar 10 1975| 75|false|Sep 29 2050|              F11|[NA, I13, I14]|      F1|[I15, I16]|false|[US02, US01, US11, US10]
+I21|Pooja /Shinde/|     F|Feb 10 2003| 32|false|Apr 02 2035|              F16|         [I19]|      NA|        []|false|            [US05, US01]
+
+List Upcoming Birthdays US38
+ ID|          Name|Gender|   Birthday|Age|Alive|      Death|Current Spouse of|Spouses|Child of|Children|Valid|Invalid Type
+---+--------------+------+-----------+---+-----+-----------+-----------------+-------+--------+--------+-----+------------
+ I9|  Tara /Singh/|     F|Dec 10 1915| 64|false|Jan 05 1980|               F5|   [I8]|      NA|    [I6]|false|[US02, US10]
+I26|  Arbaz /Khan/|     M|Dec 02 1999| 18| true|           |               NA|     []|     F12|      []| true|          []
+I27|  Arbaz /Khan/|     M|Dec 02 1999| 18| true|           |               NA|     []|     F12|      []| true|          []
+I39|Katrina /Khan/|     F|Dec 12 2012|  5| true|           |               NA|     []|     F12|      []| true|          []
+I40|  Nawaz /Khan/|     M|Dec 03 2013|  4| true|           |               NA|     []|     F12|      []| true|          []
+
+List Upcoming Anniversaries US39
+ ID|Husband|Wife|    Married|Divorced|Children
+---+-------+----+-----------+--------+--------
+F15|    I16| I23|Dec 11 2025|        |     I24

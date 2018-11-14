@@ -5,8 +5,43 @@ import java.util.List;
 
 public class Validity {
 
-	// US01 UNFINISHED
+	// US01
+	public boolean datesBeforeCurrentDate(Person person) {
+		Date today = Calendar.getInstance().getTime();
+		if (!person.getBirthdate().before(today)) {
+			person.setValid(false);
+			person.addInvalidType("US01");
+			return false;
+		}
+		if (person.isDead()) {
+			if (!person.getDeathdate().before(today)) {
+				person.setValid(false);
+				person.addInvalidType("US01");
+				return false;
+			}
+		}
+		return true;
+	}
 
+	// US01
+	public boolean datesBeforeCurrentDate(Family person) {
+		Date today = Calendar.getInstance().getTime();
+		if (!person.getMarDate().before(today)) {
+			person.setValid(false);
+			person.addInvalidType("US01");
+			return false;
+		}
+		if (person.isDivorced()) {
+			if (!person.getDivDate().before(today)) {
+				person.setValid(false);
+				person.addInvalidType("US01");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// US02
 	public boolean birthBeforeMarriage(Person person) {
 		boolean pass = true;
 		for (Family family : person.getFamilies()) {
@@ -21,8 +56,7 @@ public class Validity {
 		return pass;
 	}
 
-	// Sprint 1
-	// 100% works
+	// US03
 	public boolean birthBeforeDeath(Person person) {
 		if (person.isDead()) {
 			if (person.getBirthdate().before(person.getDeathdate())) {
@@ -37,11 +71,12 @@ public class Validity {
 		}
 	}
 
+	// US04
 	public boolean marriageBeforeDivorce(Person person) {
 		boolean pass = true;
 		for (Family family : person.getFamilies()) {
 			if (family.isDivorced()) {
-				if (!family.getMarDate().before(family.getDivDate())) {
+				if (family.getMarDate().after(family.getDivDate())) {
 					family.setValid(false);
 					family.addInvalidType("US04");
 					person.setValid(false);
@@ -53,6 +88,7 @@ public class Validity {
 		return pass;
 	}
 
+	// US05
 	public boolean marriageBeforeDeath(Person person) {
 		boolean pass = true;
 		for (Family family : person.getFamilies()) {
@@ -69,6 +105,7 @@ public class Validity {
 		return pass;
 	}
 
+	// US06
 	public boolean divorceBeforeDeath(Person person) {
 		boolean pass = true;
 		for (Family family : person.getFamilies()) {
@@ -85,6 +122,7 @@ public class Validity {
 		return pass;
 	}
 
+	// US07
 	public boolean under150YearsOld(Person person) {
 		if (person.getAge() > 150) {
 			person.setValid(false);
@@ -98,6 +136,7 @@ public class Validity {
 	// US08 UNFINISHED
 	// US09 UNFINISHED
 
+	// US10
 	public boolean marriageAfter14(Person person) {
 		boolean pass = true;
 		for (Family family : person.getFamilies()) {
@@ -115,6 +154,7 @@ public class Validity {
 
 	// US11 to US20 Unfinished
 
+	// US21
 	public boolean correctGenderForRole(Person person) {
 		boolean pass = true;
 		for (Family family : person.getFamilies()) {
@@ -159,7 +199,7 @@ public class Validity {
 		}
 		return bool;
 	}
-
+	
 	// US22
 	public boolean uniqueFamilyIDs(ArrayList<Family> families) {
 		List<String> ids = new ArrayList<String>();
@@ -208,40 +248,157 @@ public class Validity {
 		}
 	}
 
-	// US01
-	public boolean datesBeforeCurrentDate(Person person) {
-		Date today = Calendar.getInstance().getTime();
-		if (!person.getBirthdate().before(today)) {
-			person.setValid(false);
-			person.addInvalidType("US01");
-			return false;
+	// US25
+	public boolean uniqueFirstNamesAmongChildrenInFamily(Family family) {
+		boolean pass = true;
+		ArrayList<String> firstNames = new ArrayList<String>();
+		ArrayList<Person> children = family.getChildren();
+		for (Person child : children) {
+			String childName = child.getName();
+			childName = HelperFunctions.getFirstName(childName);
+			firstNames.add(childName);
 		}
-		if (person.isDead()) {
-			if (!person.getDeathdate().before(today)) {
-				person.setValid(false);
-				person.addInvalidType("US01");
-				return false;
-			}
+		if (HelperFunctions.findDuplicates(firstNames).isEmpty()) {
+			return pass;
+		} else {
+			pass = false;
+			family.setValid(false);
+			family.addInvalidType("US25");
+			return pass;
 		}
-		return true;
 	}
 
-	// US01
-	public boolean datesBeforeCurrentDate(Family person) {
-		Date today = Calendar.getInstance().getTime();
-		if (!person.getMarDate().before(today)) {
-			person.setValid(false);
-			person.addInvalidType("US01");
-			return false;
+	// US16
+	public boolean sameLastNamesAmongMalesInFamily(Family family) {
+		boolean pass = true;
+		ArrayList<String> lastNames = new ArrayList<String>();
+		if (!(family.getHusband().getBirthdate() == null)) {
+			lastNames.add(HelperFunctions.getLastName(family.getHusband().getName()));
 		}
-		if (person.isDivorced()) {
-			if (!person.getDivDate().before(today)) {
-				person.setValid(false);
-				person.addInvalidType("US01");
-				return false;
+		ArrayList<Person> children = family.getChildren();
+		for (Person child : children) {
+			String childName = child.getName();
+			childName = HelperFunctions.getLastName(childName);
+			for (String lastName : lastNames) {
+				if (!lastName.equals(childName)) {
+					if (child.getGender().equals("M")) {
+						pass = false;
+					}
+				}
+			}
+			lastNames.add(childName);
+		}
+		if (pass == false) {
+			family.setValid(false);
+			family.addInvalidType("US16");
+		}
+		return pass;
+	}
+
+	// US08
+	public boolean birthBeforeMarriageOfParents(Family family) {
+		boolean pass = true;
+		int counter = 0;
+		boolean divorced = family.isDivorced();
+		Date marDate = family.getMarDate();
+		ArrayList<Person> children = family.getChildren();
+		for (Person child : children) {
+			if (child.getBirthdate().before(marDate)) {
+				family.setValid(false);
+				family.addInvalidType("US08");
+				counter++;
+				pass = false;
+			}
+			if (family.isDivorced()) {
+				Date divDate = family.getDivDate();
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(divDate);
+				cal.add(Calendar.MONTH, +9);
+				divDate = cal.getTime();
+				if (child.getBirthdate().after(divDate)) {
+					family.setValid(false);
+					if (counter == 0) {
+						family.addInvalidType("US08");
+					}
+					pass = false;
+				}
 			}
 		}
-		return true;
+		return pass;
+	}
+
+	// US09
+	public boolean birthBeforeDeathOfParents(Family family) {
+		boolean pass = true;
+		int counter = 0;
+		ArrayList<Person> children = family.getChildren();
+		Person husband = family.getHusband();
+		Person wife = family.getWife();
+		if (wife == null) {
+			return true;
+		}
+		for (Person child : children) {
+			if (wife.isDead()) {
+				if (child.getBirthdate().after(wife.getDeathdate())) {
+					family.setValid(false);
+					family.addInvalidType("US09");
+					counter++;
+					pass = false;
+				}
+			}
+			if (husband.getBirthdate() == null) {
+				return pass;
+			}
+			if (husband.isDead()) {
+				Date husbandDeath9Months = husband.getBirthdate();
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(husbandDeath9Months);
+				cal.add(Calendar.MONTH, +9);
+				husbandDeath9Months = cal.getTime();
+				if (child.getBirthdate().after(husbandDeath9Months)) {
+					family.setValid(false);
+					if (counter == 0) {
+						family.addInvalidType("US09");
+					}
+					pass = false;
+				}
+			}
+
+		}
+		return pass;
+	}
+
+	// US12
+	public boolean parentsNotTooOld(Family family) {
+		boolean pass = true;
+		int counter = 0;
+		Person husband = family.getHusband();
+		Person wife = family.getWife();
+		ArrayList<Person> children = family.getChildren();
+		for (Person child : children) {
+			if (!(wife == null)) {
+				int diff = HelperFunctions.differenceInDatesInYears(wife.getBirthdate(), child.getBirthdate());
+				if (diff > 60) {
+					family.setValid(false);
+					counter++;
+					family.addInvalidType("US12");
+					pass = false;
+				}
+			}
+			if (!(husband == null)) {
+				if (!(husband.getBirthdate() == null)) {
+					int diff = HelperFunctions.differenceInDatesInYears(husband.getBirthdate(), child.getBirthdate());
+					if (diff > 80) {
+						family.setValid(false);
+						if (counter == 0) {
+							family.addInvalidType("US12");
+						}
+						pass = false;
+					}
+				}
+			}
+		}
+		return pass;
 	}
 
 	public void validityChecker(Person person) {
@@ -260,6 +417,11 @@ public class Validity {
 	public void validityChecker(Family family) {
 		lessThan15Siblings(family);
 		datesBeforeCurrentDate(family);
+		uniqueFirstNamesAmongChildrenInFamily(family);
+		// sameLastNamesAmongMalesInFamily(family);
+		birthBeforeMarriageOfParents(family);
+		birthBeforeDeathOfParents(family);
+		parentsNotTooOld(family);
 	}
 
 	public void validityChecker(ArrayList<Person> people, ArrayList<Family> families) {
